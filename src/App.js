@@ -22,23 +22,12 @@ const App = () => {
   // }, []);
 
   return (
-    <div className="App" style={{ height: "100vh" }}>
-      {/* {data.map((value) => (
+    <div className="App">
+      {data.map((value) => (
         <div>{value}</div>
-      ))} */}
-      <iframe
-        title="test"
-        src="https://files.crazygames.com/ludo-king/1/index.html"
-        allow="autoplay; fullscreen; microphone; clipboard-read; clipboard-write"
-        webkitallowfullscreen="true"
-        mozallowfullscreen="true"
-        msallowfullscreen="true"
-        allowfullscreen="true"
-        sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-presentation allow-scripts allow-same-origin"
-        style={{ width: "100%", height: "100%" }}
-        // style="border: 0px; background-color: rgb(255, 255, 255); width: 10px; height: 10px; min-width: 100%; min-height: 100%;"
-      ></iframe>
-      {/* <input p text="My Button" /> */}
+      ))}
+      <input placeholder="" />
+      <Button text="My Button" />
     </div>
   );
 };
