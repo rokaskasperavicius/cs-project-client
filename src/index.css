@@ -11,9 +11,21 @@ button {
 
 button:hover {
   background-color: white;
-  color: black
+  color: black;
 }
 
 .App div {
-  color: red
+}
+
+#root {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.custom-input {
+  width: 300px;
+  padding: 10px;
+  border: 0;
+  outline: none;
+  border-radius: 10px;
+  border: 2px solid black;
 }
