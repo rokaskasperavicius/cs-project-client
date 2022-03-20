@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Button } from "./components";
-
 import { Input } from "./components/Input";
+import { Button } from "./components/Button";
+import { AddButton } from "./components/AddButton";
+import DropdownButton from "./components/DropdownButton";
 
-// const data = ["ve", "stuff"];
+
 
 const data = ["foods", "medicine"];
 
@@ -29,7 +30,8 @@ const App = () => {
   // });
   // }, []);
 
-  const handleChange = () => {
+
+    const handleChange = () => {
     console.log("CALL BACKEND IMMEDIATELY");
   };
 
@@ -63,7 +65,32 @@ const App = () => {
         ))}
       </select>
 
-      <button onClick={() => handleChange}>Add product</button>
+      <AddButton onClick={() => handleChange}>Add</AddButton>
+
+        <div>
+            <Input placeholder="Type product..."/>
+        </div>
+
+        <div>
+            <Input placeholder="Type expiration date..."/>
+        </div>
+
+        <div>
+            <Input placeholder="Type notes..."/>
+        </div>
+
+        {/* WORKING ON IT
+        <div>
+            <DropdownButton> data={[
+                {value: 1, label: "Food"},
+                {value: 2, label: "Cosmetics"},
+                {value: 3, label: "Medicine"},
+            ]}
+                placeholder= "Select category"
+                onChange={handleChange}
+            </DropdownButton>
+        </div>
+
 
       {/* {data.map((value) => (
         <div>{value}</div>
