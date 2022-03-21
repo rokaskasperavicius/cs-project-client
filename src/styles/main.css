@@ -1,0 +1,38 @@
+button {
+    background-color: white;
+    padding: 5px 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+input {
+    display: block;
+    padding: 15px 1px;
+    margin: 10px 0px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid black;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+dropdownStyle {
+    display: block;
+    padding: 15px 1px;
+    margin: 10px 0px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid black;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
