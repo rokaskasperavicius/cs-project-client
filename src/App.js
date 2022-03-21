@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "./components";
+import Navbar from './components/Navbar';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import { Input } from "./components/Input";
 
@@ -41,7 +43,11 @@ const App = () => {
 
   return (
     <div className="App">
+        <Router>
+            <Navbar />
+        </Router>
       <h1>Website for food tracking</h1>
+
 
       <div>
         <label htmlFor="test">Name:</label>
