@@ -1,21 +1,25 @@
-//WORKING ON IT
-
-import React from "react"
+import React, {useEffect, useState} from "react"
 import PropTypes from "prop-types";
 
-const DropdownButton = ({value, data, placeholder, onChange}) =>{
+const DropdownButton = ({value, data, placeholder, dropdownStyle}) =>{
 
-    const handleChange = (event) => {
-        const {value} = event.target;
-        onChange(value);
+    const [name, setName] = useState("");
+
+    const handleChange = () => {
+        console.log("CALL BACKEND IMMEDIATELY");
     };
+
+    useEffect(() => {
+        handleChange();
+    }, [name]);
+
 
     return(
         <div className="">
             <select
+                onChange={(e) => setName(e.target.value)}
                 value = {value}
-                className="from-control"
-                onChange={handleChange}>
+                className="">
                 <option value="">{placeholder}</option>
                 {data.map((item, key) => (
                     <option
@@ -42,7 +46,7 @@ DropdownButton.propTypes = {
 DropdownButton.defaultProps = {
     value: "",
     placeholder: "",
-    styleClass: ""
+    dropdownStyle: ""
 };
 
 export default DropdownButton;
