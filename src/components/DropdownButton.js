@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import PropTypes from "prop-types";
 
-const DropdownButton = ({value, data, placeholder, dropdownStyle}) =>{
+const DropdownButton = ({value, data, placeholder}) =>{
 
     const [name, setName] = useState("");
 
@@ -19,7 +19,7 @@ const DropdownButton = ({value, data, placeholder, dropdownStyle}) =>{
             <select
                 onChange={(e) => setName(e.target.value)}
                 value = {value}
-                className="">
+            >
                 <option value="">{placeholder}</option>
                 {data.map((item, key) => (
                     <option
@@ -40,13 +40,11 @@ DropdownButton.propTypes = {
     placeholder: PropTypes.string,
     data: PropTypes.array.isRequired,
     styleClass: PropTypes.string,
-    onChange: PropTypes.func.isRequired,
 };
 
 DropdownButton.defaultProps = {
     value: "",
     placeholder: "",
-    dropdownStyle: ""
 };
 
 export default DropdownButton;

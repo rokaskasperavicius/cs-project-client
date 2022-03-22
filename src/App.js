@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { Input } from "./components/Input";
 import {Button} from "./components/Button";
 import DropdownButton from "./components/DropdownButton";
-import "./styles/main.css";
+import styles from "./styles/styles.module.css";
+import Navbar from './components/Navbar';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 
 // http://getbem.com/introduction/
@@ -10,15 +12,9 @@ import "./styles/main.css";
 const App = () => {
 
 
-    const [name, setName] = useState("");
-
     const handleChange = () => {
         console.log("CALL BACKEND IMMEDIATELY");
     };
-
-    useEffect(() => {
-        handleChange();
-    }, [name]);
 
 
   return (
@@ -32,38 +28,54 @@ const App = () => {
         ))}
       </select>*/}
 
+            <Router>
+                <Navbar />
+            </Router>
+
+            <h1>Website for food tracking</h1>
+
          <div>
-            <Button onClick={() => handleChange}>Add</Button>
+            <Button
+                className={styles.button}
+                onClick={() => handleChange}>
+                Add
+            </Button>
         </div>
 
         <div>
-            <Input placeholder="Type product..."/>
+            <Input
+                className={styles.input}
+                placeholder="Type product..."/>
         </div>
 
         <div>
-            <Input placeholder="Type expiration date..."/>
+            <Input
+                className={styles.input}
+                placeholder="Type expiration date..."/>
         </div>
 
         <div>
-            <Input placeholder="Type notes..."/>
+            <Input
+                className={styles.input}
+                placeholder="Type notes..."/>
         </div>
 
         <div>
             <DropdownButton
                 placeholder= "Select Category"
-                onChange={(e) => setName(e.target.value)}
+                className={styles.dropdown}
                 data={[
                     {value: 1, label: "Food"},
                     {value: 2, label: "Cosmetics"},
                     {value: 3, label: "Medicine"},
                 ]}>
+
             </DropdownButton>
         </div>
 
         <div>
             <DropdownButton
                 placeholder= "Select Subcategory"
-                onChange={(e) => setName(e.target.value)}
                 data={[
                     {value: 1, label: "Vegetables"},
                     {value: 2, label: "Meat"},
