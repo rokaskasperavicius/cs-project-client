@@ -1,12 +1,13 @@
-import React from "react";
+ //grid maybe
+ import React from "react";
 
 export const Layout = ({ children }) => (
   <div
     style={{
       // maxWidth: "60vw",
-      padding: "40px",
+      padding: "20px",
       margin: "auto",
-      backgroundColor: "red",
+      backgroundColor: "blue",
     }}
   >
     {children}
