@@ -1,4 +1,4 @@
-import React from 'react'
+/*import React from 'react'
 import {Nav, NavLink, NavMenu} from './NavbarElements'
 const Navbar = () => {
     return (
@@ -22,4 +22,4 @@ const Navbar = () => {
         </>
     )
 }
-export default Navbar
+export default Navbar*/

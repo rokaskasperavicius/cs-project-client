@@ -3,14 +3,17 @@ import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 
 import App from "./App";
-import { Layout } from "./components/Layout";
+import { Layout } from "./components/Layout/Layout";
 
 import "./index.css";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
     <Layout>
+      
       <App />
+     
     </Layout>
   </React.StrictMode>,
   document.getElementById("root")

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+/*import styled from 'styled-components';
 import {NavLink as Link} from 'react-router-dom';
 
 export const Nav = styled.nav`
@@ -32,4 +32,4 @@ export const NavMenu = styled.div`
   @media screen and (max-width: 768px) {
     display: none;
   }
-  `
+  `*/

@@ -7,3 +7,5 @@ export const Input = ({ placeholder, className }) => (
       placeholder={placeholder}
   />
 );
+
+export default {Input};
