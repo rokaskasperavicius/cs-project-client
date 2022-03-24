@@ -1,36 +1,31 @@
-import { useEffect, useState } from "react";
-import { Input } from "./components/Input";
-import {Button} from "./components/Button";
-import DropdownButton from "./components/DropdownButton";
-import styles from "./styles/styles.module.css";
-import Navbar from './components/Navbar';
+import { Routes, Route } from "react-router-dom";
 
-import {BrowserRouter as Router, Redirect, Routes, Route} from 'react-router-dom';
-import {TypeNewProduct} from './Pages/addProduct/TypeNewProduct';
-import {ExistingProduct} from './Pages/addProduct/ExistingProduct';
-import {UnknownProduct} from './Pages/addProduct/UnknownProduct';
+import { TypeNewProduct } from "./Pages/addProduct/TypeNewProduct";
+import { ExistingProduct } from "./Pages/addProduct/ExistingProduct";
+import { UnknownProduct } from "./Pages/addProduct/UnknownProduct";
 
+import { Layout } from "./components/Layouts";
 
 function App() {
-    return (
-     <Router>
-        <Routes>
-            <Route path='/typenew' element={TypeNewProduct} />
-            <Route path='/existing' element={ExistingProduct} />
-            <Route path='/unknown' element={UnknownProduct} />
-        </Routes>        
-     </Router>
-    );
-  }
+  return (
+    <Layout>
+      <Routes>
+        <Route path="/typenew" element={TypeNewProduct} />
+        <Route path="/existing" element={ExistingProduct} />
+        <Route path="/unknown" element={UnknownProduct} />
+      </Routes>
+    </Layout>
+  );
+}
 
-export default App
+export default App;
 // // http://getbem.com/introduction/
 
 // const App = () => {
 
-     const handleChange = () => {
-        console.log("CALL BACKEND IMMEDIATELY");
-    };
+const handleChange = () => {
+  console.log("CALL BACKEND IMMEDIATELY");
+};
 
 //   return (
 //     <div className="App">
@@ -43,16 +38,14 @@ export default App
 //         ))}
 //       </select>*/}
 
-        
-
 //             <h3>Page "Type new product" </h3>
 
 //          <div>
-            // <Button
-            //     className={styles.button}
-            //     onClick={() => handleChange}>
-            //     Add
-            // </Button>
+// <Button
+//     className={styles.button}
+//     onClick={() => handleChange}>
+//     Add
+// </Button>
 //         </div>
 
 //         <div>
