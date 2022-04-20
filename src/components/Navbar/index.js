@@ -9,13 +9,13 @@ const Navbar = () => (
         <h1>CS Project</h1>
       </NavLink>
       <NavMenu>
-        <NavLink to="/add-product" activeStyle>
+        <NavLink to="/addproduct" activeStyle>
           Add product
         </NavLink>
-        <NavLink to="/my-products" activeStyle>
+        <NavLink to="/mylist" activeStyle>
           My products
         </NavLink>
-        <NavLink to="/my-profile" activeStyle>
+        <NavLink to="/myprofile" activeStyle>
           My profile
         </NavLink>
       </NavMenu>
