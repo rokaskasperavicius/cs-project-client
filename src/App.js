@@ -14,8 +14,8 @@ function App() {
     <Layout>
       <Routes>
         <Route path="/addproduct" element={TypeNewProduct} />
-        <Route path="/existing" element={ExistingProduct} />
-        <Route path="/unknown" element={UnknownProduct} />
+        <Route path="/addproduct/existing" element={ExistingProduct} />
+        <Route path="/addproduct/unknown" element={UnknownProduct} />
         <Route path="/mylist" element={MyList} />
         <Route path="/myprofile" element={MyProfile} />
 

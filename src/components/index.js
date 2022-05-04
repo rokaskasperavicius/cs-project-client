@@ -2,22 +2,22 @@ import React from "react";
 
 export { Button } from "./Button";
 export { Footer } from "./Footer";
-
+/*
 const Footer = () => {
     return (
         <>
                 <Footer>
-                    <FooterLink to="/my-products" activeStyle>
+                    <p to="/mylist" activeStyle>
                         My products
-                    </FooterLink>
-                    <FooterLink to="/add-product" activeStyle>
+                    </p>
+                    <p to="/addproduct" activeStyle>
                         Add product
-                    </FooterLink>
-                    <FooterLink to="/my-profile" activeStyle>
+                    </p>
+                    <p to="/myprofile" activeStyle>
                         My profile
-                    </FooterLink>
+                    </p>
                 </Footer>
         </>
     )
 }
-export default Footer
+export default Footer */
