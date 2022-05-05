@@ -22,6 +22,7 @@ export const ExistingProduct = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.success) {
+          // Set new categories
           setCategories(res.data);
         }
       });
@@ -43,6 +44,10 @@ export const ExistingProduct = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.success) {
+          // Reset selected subcategory
+          setSelectedSubCategory("");
+
+          // Set new subcategories
           setSubCategories(res.data);
         }
       });
@@ -56,7 +61,12 @@ export const ExistingProduct = () => {
   // Controller
   const handleSubmit = () => {
     // Fail quick
-    if (!(expiryDate && note && name && selectedSubCategory)) {
+    if (!(expiryDate && name && selectedSubCategory)) {
+      return;
+    }
+
+    // If the selected expiry date is in the past, fail the form submission
+    if (new Date(expiryDate) < new Date()) {
       return;
     }
 
@@ -64,7 +74,7 @@ export const ExistingProduct = () => {
     const body = {
       name,
       subCategoryName: selectedSubCategory,
-      note,
+      note: note || undefined,
       expiryDate: new Date(expiryDate).toISOString(),
     };
 
