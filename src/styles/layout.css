@@ -1,9 +1,14 @@
 .layout {
+  height: 100vh;
+  display: flex;
 }
 
 .page-content {
   align-items: center;
-
+  flex: 1;
+  margin-top: 60px;
+  margin-bottom: 60px;
+  padding: 20px;
 }
 
 .main-content {
