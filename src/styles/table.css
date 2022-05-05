@@ -1,0 +1,9 @@
+th {
+  font-weight: normal;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+thead > tr > th {
+  font-weight: bold;
+}

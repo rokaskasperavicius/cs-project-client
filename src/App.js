@@ -6,19 +6,17 @@ import { UnknownProduct } from "./Pages/addProduct/UnknownProduct";
 
 import { Layout } from "./components/Layouts";
 import { MyList } from "./Pages/myList/mylist";
-import {MyProfile} from "./Pages/myProfile/myProfile";
-
+import { MyProfile } from "./Pages/myProfile/myProfile";
 
 function App() {
   return (
     <Layout>
       <Routes>
         <Route path="/addproduct" element={TypeNewProduct} />
-        <Route path="/addproduct/existing" element={ExistingProduct} />
+        <Route path="/addproduct/existing" element={<ExistingProduct />} />
         <Route path="/addproduct/unknown" element={UnknownProduct} />
-        <Route path="/mylist" element={MyList} />
+        <Route path="/mylist" element={<MyList />} />
         <Route path="/myprofile" element={MyProfile} />
-
       </Routes>
     </Layout>
   );

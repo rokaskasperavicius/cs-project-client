@@ -8,7 +8,7 @@ const handleChange = () => {
   console.log("CALL BACKEND IMMEDIATELY");
 };
 export const UnknownProduct = (
-  <div className="page-content">
+  <>
     <h2 className={styles.title}>Product</h2>
 
     <DropdownButton
@@ -36,5 +36,5 @@ export const UnknownProduct = (
     <Button className={styles.button} onClick={() => handleChange}>
       Add
     </Button>
-  </div>
+  </>
 );
