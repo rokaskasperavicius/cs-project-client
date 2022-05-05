@@ -13,20 +13,20 @@
     padding: 10px;
   }
   
-  .header__title {
+.header__title {
     font-size: 24px;
-  }
+}
   
-  .header-product__wrapper {
+.header-product__wrapper {
     display: flex;
     gap: 10px;
-  }
+}
   
   /*.header-product:hover {
     text-decoration: underline;
   }*/
   
-  .header-product {
+.header-product {
     cursor: pointer;
-  }
+}
   
