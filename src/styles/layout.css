@@ -1,12 +1,12 @@
 .layout {
-  height: 100vh;
-  display: flex;
+  height: 200vh;
+  background-image: url("background.svg");
 }
 
 .page-content {
   align-items: center;
   flex: 1;
-  margin-top: 60px;
+  margin-top: 110px;
   margin-bottom: 60px;
   padding: 20px;
 }
