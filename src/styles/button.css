@@ -1,0 +1,22 @@
+.button {
+    background-color: white;
+  
+    border: 1px solid bluev;
+    margin: auto;
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: grid;
+    font-size: 16px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    
+}
+.button:hover{
+    opacity: 0.9;
+
+    background-color: black;
+    color: white;
+}

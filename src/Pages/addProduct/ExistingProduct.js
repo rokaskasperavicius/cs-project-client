@@ -3,8 +3,9 @@ import { Button } from "../../components/Button";
 import DropdownButton from "../../components/DropdownButton";
 import { Input } from "../../components/Input";
 import { TextArea } from "../../components/TextArea";
-import styles from "../../styles/styles.module.css";
 import { apiUrl } from "../../config";
+
+
 
 export const ExistingProduct = () => {
   const [categories, setCategories] = useState([]);
@@ -90,7 +91,8 @@ export const ExistingProduct = () => {
 
   return (
     <>
-      <h2 className={styles.title}>Product</h2>
+
+      <h2 className="title">Product</h2>
 
       <Input
         value={name}
@@ -102,7 +104,6 @@ export const ExistingProduct = () => {
         placeholder="Select Category"
         value={selectedCategory}
         onChange={setSelectedCategory}
-        className={styles.dropdown}
         data={categories.map((c) => ({
           value: c.name,
           label: c.name,
@@ -123,17 +124,15 @@ export const ExistingProduct = () => {
         value={expiryDate}
         onChange={setExpiryDate}
         type="date"
-        placeholder="Type expiration date..."
       />
 
       <TextArea
         value={note}
         onChange={setNote}
-        className={styles.input}
         placeholder="Type notes..."
       />
 
-      <Button className={styles.button} onClick={handleSubmit}>
+      <Button onClick={handleSubmit}>
         Add
       </Button>
     </>

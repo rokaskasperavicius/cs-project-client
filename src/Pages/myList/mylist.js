@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "../../styles/styles.module.css";
+
 
 const productsMock = {
   success: true,
@@ -98,7 +98,7 @@ export const MyList = () => {
 
   return (
     <>
-      <h3 className={styles.title}>My list</h3>
+      <h3 className="title">My list</h3>
       <table>
         <thead>
           <tr>
