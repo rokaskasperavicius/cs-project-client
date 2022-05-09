@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import orderBy from "lodash/orderBy";
 
-import styles from "../../styles/styles.module.css";
 import DropdownButton from "../../components/DropdownButton";
 import { Input } from "../../components/Input";
 import { apiUrl } from "../../config";
@@ -101,7 +100,6 @@ export const MyList = () => {
         placeholder="Select Category"
         value={selectedCategory}
         onChange={setSelectedCategory}
-        className={styles.dropdown}
         data={categories.map((c) => ({
           value: c.name,
           label: c.name,
