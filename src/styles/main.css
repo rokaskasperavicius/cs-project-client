@@ -2,3 +2,9 @@
 @import "./footer.css";
 @import "./header.css";
 @import "./table.css";
+@import "./button.css";
+@import "./title.css";
+@import "./dropdown.css";
+@import "./input.css";
+@import "./textarea.css";
+@import "container.css";

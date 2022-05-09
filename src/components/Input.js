@@ -9,7 +9,7 @@ export const Input = ({
     value={value}
     onChange={(e) => onChange(e.target.value)}
     type={type}
-    className={className}
+    className="input"
     placeholder={placeholder}
   />
 );
