@@ -91,7 +91,7 @@ export const MyList = () => {
 
   return (
     <>
-      <h3 className={styles.title}>My list</h3>
+      <h3 className="title">My list</h3>
       <Input
         value={selectedSearch}
         onChange={setSelectedSearch}
