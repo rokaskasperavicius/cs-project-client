@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useDebounce } from "use-debounce";
+import orderBy from "lodash/orderBy";
+
 import styles from "../../styles/styles.module.css";
 import DropdownButton from "../../components/DropdownButton";
-import {Input} from "../../components/Input";
-import {apiUrl} from "../../config";
-
+import { Input } from "../../components/Input";
+import { apiUrl } from "../../config";
 
 export const MyList = () => {
   const [products, setProducts] = useState([]);
@@ -14,112 +16,119 @@ export const MyList = () => {
   const [selectedSearch, setSelectedSearch] = useState("");
   const [selectedOrderBy, setSelectedOrderBy] = useState("");
   //TODO: get possible orders from database, MP 08/05
-  const orderBy = ["name","note","expiry"];
+  const orderByOptions = ["name", "note", "expiry"];
 
-    useEffect(() => {
-        // Fetching all categories
-        fetch(apiUrl + "/categories")
-            .then((res) => res.json())
-            .then((res) => {
-                if (res.success) {
-                    // Set new categories
-                    setCategories(res.data);
-                }
-            });
-        }, []);
+  const [debouncedSearch] = useDebounce(selectedSearch, 300);
 
-    useEffect(() => {
-        // Fail quick
-        if (!selectedCategory) {
-            return;
+  useEffect(() => {
+    // Fetching all categories
+    fetch(apiUrl + "/categories")
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.success) {
+          // Set new categories
+          setCategories(res.data);
         }
-        // Fetch all category's subcategories
-        fetch(apiUrl + "/categories/subcategories?categoryName=" + selectedCategory)
-            .then((res) => res.json())
-            .then((res) => {
-                if (res.success) {
-                    setSubCategories(res.data);
-                }
-            });
-    }, [selectedCategory]);
-
-    useEffect(() => {
-        // Fetching all products
-        fetch(apiUrl + "/products")
-            .then((res) => res.json())
-            .then((res) => {
-                if (res.success) {
-                    // Set new categories
-                    setProducts(res.data);
-                }
-            });
+      });
   }, []);
 
-    useEffect(() => {
-        // fail check
-        if (!selectedSubcategory && !selectedSearch && !orderBy) {
-            return;
+  useEffect(() => {
+    // Fail quick
+    if (!selectedCategory) {
+      return;
+    }
+    // Fetch all category's subcategories
+    fetch(apiUrl + "/categories/subcategories?categoryName=" + selectedCategory)
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.success) {
+          setSubCategories(res.data);
         }
-        const parametersArray = [];
-        if (selectedSubcategory) {
-            //TODO: allow filtering by category, MP 08/05
-            parametersArray.push("filter=" + selectedSubcategory)
-        }
-        if (selectedOrderBy) {
-            parametersArray.push("orderby=" + selectedOrderBy)
-        }
-        if (selectedSearch) {
-            parametersArray.push("search=" + selectedSearch)
-        }
-        const endpoint = "/products?" + parametersArray.join('&');
+      });
+  }, [selectedCategory]);
 
-        fetch(apiUrl + endpoint)
-            .then((res) => res.json())
-            .then((res) => {
-                if (res.success) {
-                    setProducts(res.data);
-                }
-            })
-    },[selectedSearch, selectedSubcategory, selectedOrderBy])
+  useEffect(() => {
+    // Fetching all products
+    fetch(apiUrl + "/products")
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.success) {
+          // Set new categories
+          setProducts(res.data);
+        }
+      });
+  }, []);
 
+  useEffect(() => {
+    const newOrder = selectedOrderBy || "name";
+    setProducts(orderBy(products, [newOrder]));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedOrderBy]);
+
+  useEffect(() => {
+    // fail check
+    const parametersArray = [];
+
+    if (selectedSubcategory) {
+      //TODO: allow filtering by category, MP 08/05
+      parametersArray.push("filter=" + encodeURIComponent(selectedSubcategory));
+    }
+
+    if (debouncedSearch) {
+      parametersArray.push("search=" + encodeURIComponent(debouncedSearch));
+    }
+    const endpoint = "/products?" + parametersArray.join("&");
+
+    fetch(apiUrl + endpoint)
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.success) {
+          setProducts(res.data);
+          setSelectedOrderBy("");
+        }
+      });
+  }, [debouncedSearch, selectedSubcategory]);
 
   return (
     <>
       <h3 className={styles.title}>My list</h3>
-        <Input
-            value={selectedSearch}
-            onChange={setSelectedSearch}
-            placeholder="Search for product..."
-        />
-        <DropdownButton
-            placeholder="Select Category"
-            value={selectedCategory}
-            onChange={setSelectedCategory}
-            className={styles.dropdown}
-            data={categories.map((c) => ({
-                value: c.name,
-                label: c.name,
-            }))}
-        />
+      <Input
+        value={selectedSearch}
+        onChange={setSelectedSearch}
+        placeholder="Search for product..."
+      />
+      <DropdownButton
+        placeholder="Select Category"
+        value={selectedCategory}
+        onChange={setSelectedCategory}
+        className={styles.dropdown}
+        data={categories.map((c) => ({
+          value: c.name,
+          label: c.name,
+        }))}
+      />
 
+      {selectedCategory && (
         <DropdownButton
-            placeholder="Select Subcategory"
-            value={selectedSubcategory}
-            onChange={setSelectedSubcategory}
-            data={subCategories.map((c) => ({
-                value: c.name,
-                label: c.name,
-            }))}
+          placeholder="Select Subcategory"
+          value={selectedSubcategory}
+          onChange={setSelectedSubcategory}
+          data={subCategories.map((c) => ({
+            value: c.name,
+            label: c.name,
+          }))}
         />
-        <DropdownButton
-            placeholder="Order By"
-            value={selectedOrderBy}
-            onChange={setSelectedOrderBy}
-            data={orderBy.map((c) => ({
-                value: c,
-                label: c,
-            }))}
-        />
+      )}
+
+      <DropdownButton
+        placeholder="Order By"
+        value={selectedOrderBy}
+        onChange={setSelectedOrderBy}
+        data={orderByOptions.map((c) => ({
+          value: c,
+          label: c,
+        }))}
+      />
       <table>
         <thead>
           <tr>
