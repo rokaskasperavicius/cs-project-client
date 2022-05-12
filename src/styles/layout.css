@@ -1,6 +1,10 @@
 .layout {
   height: 200vh;
-  background-image: url("background.svg");
+  background-image: url("../components/Icons/earth.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-attachment: fixed;
+  background-position: center;
 }
 
 .page-content {
