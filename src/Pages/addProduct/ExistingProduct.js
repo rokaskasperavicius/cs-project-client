@@ -102,7 +102,7 @@ export const ExistingProduct = () => {
   return (
     <>
 
-      <h2 className="title">Product</h2>
+      <h3 className="title">Add product</h3>
 
       <Input
         value={name}
