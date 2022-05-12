@@ -14,9 +14,13 @@
     cursor: pointer;
     
 }
-.button:hover{
+.button:hover:not(:disabled){
     opacity: 0.9;
 
     background-color: black;
     color: white;
+}
+
+.button:disabled {
+    cursor: not-allowed;
 }

@@ -36,5 +36,6 @@ tbody > tr{
 table{
   background-color: #eefbfb;
   font-family: sans-serif;
-  font-size: 16px
+  font-size: 16px;
+  width: 100%;
 }

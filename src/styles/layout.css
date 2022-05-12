@@ -1,23 +1,20 @@
 .layout {
-  height: 200vh;
+  height: 100vh;
   background-image: url("../components/Icons/earth.svg");
   background-repeat: no-repeat;
   background-size: contain;
   background-attachment: fixed;
   background-position: center;
+
+  display: flex;
 }
 
 .page-content {
-  align-items: center;
-  /* flex: 1;
-  margin-top: 110px;
+  margin-top: 60px;
   margin-bottom: 60px;
-  padding: 20px; */
-  margin: 30px;
-  padding: 30px;
-}
+  flex-grow: 1;
 
-.main-content {
-  padding: 10px 20px 70px 20px;
-  align-items: center;
+  padding: 0px 30px 30px 30px;
+
+  overflow-y: scroll;
 }
