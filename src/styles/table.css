@@ -4,6 +4,10 @@ https://stackoverflow.com/questions/65864594/html-and-css-table-grid-design */
 th {
   flex-basis: 33.333%;
   font-weight: bold;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 tr{
   display: -webkit-box;

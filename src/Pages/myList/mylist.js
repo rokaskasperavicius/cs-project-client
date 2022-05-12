@@ -15,9 +15,16 @@ export const MyList = () => {
   const [selectedSearch, setSelectedSearch] = useState("");
   const [selectedOrderBy, setSelectedOrderBy] = useState("");
   //TODO: get possible orders from database, MP 08/05
-  const orderByOptions = ["name", "note", "expiry"];
+
+  const orderByOptions = [
+    { label: "Name", value: "name" },
+    { label: "Note", value: "note" },
+    { label: "Expiry", value: "expiryDate" },
+  ];
 
   const [debouncedSearch] = useDebounce(selectedSearch, 300);
+
+  console.log(products);
 
   useEffect(() => {
     // Fetching all categories
@@ -123,8 +130,8 @@ export const MyList = () => {
         value={selectedOrderBy}
         onChange={setSelectedOrderBy}
         data={orderByOptions.map((c) => ({
-          value: c,
-          label: c,
+          value: c.value,
+          label: c.label,
         }))}
       />
       <table>
@@ -136,13 +143,15 @@ export const MyList = () => {
           </tr>
         </thead>
         <tbody>
-          {products.map((p) => (
-            <tr>
-              <th>{p.name}</th>
-              <th>{p.note}</th>
-              <th>{p.expiryDate}</th>
-            </tr>
-          ))}
+          {products
+            // .filter((p) => p.expiryDate < new Date().toISOString())
+            .map((p) => (
+              <tr>
+                <th>{p.name}</th>
+                <th>{p.note}</th>
+                <th>{p.expiryDate.split("T")[0]}</th>
+              </tr>
+            ))}
         </tbody>
       </table>
     </>
