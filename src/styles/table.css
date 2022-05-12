@@ -1,9 +1,36 @@
-th {
-  font-weight: normal;
-  border: 1px solid black;
-  padding: 5px;
-}
+/*Inspired by
+https://stackoverflow.com/questions/65864594/html-and-css-table-grid-design */
 
-thead > tr > th {
+th {
+  flex-basis: 33.333%;
   font-weight: bold;
+}
+tr{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+thead {
+  font-weight: bold;
+  color: grey;
+  text-align: center;
+}
+tbody > tr{
+  border-radius: 2em;
+  background-color: white;
+  margin-bottom: 20px;
+  -moz-box-shadow: 0 0 3px grey;
+  -webkit-box-shadow: 0 0 3px grey;
+  box-shadow: 0 0 5px grey;
+
+}
+table{
+  background-color: #eefbfb;
+  font-family: sans-serif;
+  font-size: 16px
 }
