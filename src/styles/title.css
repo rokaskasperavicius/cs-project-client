@@ -4,3 +4,44 @@
     /* width: 300px;
     align-content: center; */
 }
+
+.filter__wrapper {
+    display: flex;
+}
+
+@media (max-width: 720px) {
+    .filter__wrapper {
+        display: unset;
+    }
+}
+
+.desktop-view {
+    display: table;
+}
+
+.mobile-view {
+    display: none;
+}
+
+@media (max-width: 720px) {
+    .desktop-view {
+        display: none;
+    }
+
+    .mobile-view {
+        display: unset;
+    }
+}
+
+
+.mobile-view__product + .mobile-view__product {
+    margin-top: 20px;
+}
+
+.mobile-view__product {
+    border: 1px solid black;
+}
+
+.error {
+    border: 1px solid red !important;
+}

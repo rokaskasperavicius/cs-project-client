@@ -3,13 +3,13 @@ export const Input = ({
   value,
   onChange,
   placeholder,
-  className,
+  className = "",
 }) => (
   <input
     value={value}
     onChange={(e) => onChange(e.target.value)}
     type={type}
-    className="input"
+    className={"input" + className}
     placeholder={placeholder}
   />
 );

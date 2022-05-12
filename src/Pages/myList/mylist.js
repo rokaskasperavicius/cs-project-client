@@ -98,43 +98,46 @@ export const MyList = () => {
   return (
     <>
       <h3 className="title">My list</h3>
-      <Input
-        value={selectedSearch}
-        onChange={setSelectedSearch}
-        placeholder="Search for product..."
-      />
-      <DropdownButton
-        placeholder="Select Category"
-        value={selectedCategory}
-        onChange={setSelectedCategory}
-        data={categories.map((c) => ({
-          value: c.name,
-          label: c.name,
-        }))}
-      />
-
-      {selectedCategory && (
+      <div className="filter__wrapper">
+        <Input
+          value={selectedSearch}
+          onChange={setSelectedSearch}
+          placeholder="Search for product..."
+        />
         <DropdownButton
-          placeholder="Select Subcategory"
-          value={selectedSubcategory}
-          onChange={setSelectedSubcategory}
-          data={subCategories.map((c) => ({
+          placeholder="Select Category"
+          value={selectedCategory}
+          onChange={setSelectedCategory}
+          data={categories.map((c) => ({
             value: c.name,
             label: c.name,
           }))}
         />
-      )}
 
-      <DropdownButton
-        placeholder="Order By"
-        value={selectedOrderBy}
-        onChange={setSelectedOrderBy}
-        data={orderByOptions.map((c) => ({
-          value: c.value,
-          label: c.label,
-        }))}
-      />
-      <table>
+        {selectedCategory && (
+          <DropdownButton
+            placeholder="Select Subcategory"
+            value={selectedSubcategory}
+            onChange={setSelectedSubcategory}
+            data={subCategories.map((c) => ({
+              value: c.name,
+              label: c.name,
+            }))}
+          />
+        )}
+
+        <DropdownButton
+          placeholder="Order By"
+          value={selectedOrderBy}
+          onChange={setSelectedOrderBy}
+          data={orderByOptions.map((c) => ({
+            value: c.value,
+            label: c.label,
+          }))}
+        />
+      </div>
+      <h4>Products:</h4>
+      <table className="desktop-view">
         <thead>
           <tr>
             <th>Name</th>
@@ -154,6 +157,15 @@ export const MyList = () => {
             ))}
         </tbody>
       </table>
+      <div className="mobile-view">
+        {products.map((p) => (
+          <div className="mobile-view__product">
+            <p>{p.name}</p>
+            <p>{p.note}</p>
+            <p>{p.expiryDate}</p>
+          </div>
+        ))}
+      </div>
     </>
   );
 };
