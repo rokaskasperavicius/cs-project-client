@@ -97,7 +97,7 @@ export const MyList = () => {
 
   return (
     <>
-      <h3 className="title">My list</h3>
+      <h3 className="title">My products</h3>
       <div className="filter__wrapper">
         <Input
           value={selectedSearch}
@@ -169,3 +169,6 @@ export const MyList = () => {
     </>
   );
 };
+
+
+
