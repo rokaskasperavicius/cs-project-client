@@ -7,13 +7,13 @@ import addproduct from "./Icons/addproduct.svg";
 export const Footer = () => (
   <footer className="footer">
     <div className="footer-product__wrapper">
-      <Link to="/mylist" activeStyle>
+      <Link to="/myproducts" activeStyle>
         <p className="footer-product">
           My products
           <img alt="list icon" src={mylist} width="30" height="30" />
         </p>
       </Link>
-      <Link to="/addproduct/existing" activeStyle>
+      <Link to="/addproduct" activeStyle>
         <p className="footer-product">
           Add product
           <img alt="product icon" src={addproduct} width="30" height="30" />

@@ -123,7 +123,7 @@ export const ExistingProduct = () => {
 
   return (
     <>
-      <h2 className="title">Product</h2>
+      <h2 className="title">Add product</h2>
 
       <label>Search:*</label>
       <Input
