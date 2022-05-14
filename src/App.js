@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
-import { ExistingProduct } from "./Pages/addProduct/ExistingProduct";
+import { ExistingProduct } from "./pages/addProduct/addProduct";
 import { Layout } from "./components/Layouts";
-import { MyList } from "./Pages/myList/mylist";
-import { MyProfile } from "./Pages/myProfile/myProfile";
-import { HomePage } from "./Pages/homePage/homePage";
+import { MyList } from "./pages/myproducts/myproducts";
+import { MyProfile } from "./pages/myProfile/myProfile";
+import { HomePage } from "./pages/homePage/homePage";
 
 function App() {
     return (

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import mylist from "./Icons/mylist.svg";
-import addproduct from "./Icons/addproduct.svg";
+import mylist from "../assets/icons/mylist.svg";
+import addproduct from "../assets/icons/addproduct.svg";
 //import myprofile from "./Icons/myprofile.svg";
 
 export const Footer = () => (

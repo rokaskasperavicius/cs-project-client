@@ -3,7 +3,7 @@ import { useDebounce } from "use-debounce";
 import orderBy from "lodash/orderBy";
 
 import DropdownButton from "../../components/DropdownButton";
-import { Input } from "../../components/Input";
+import { InputSearch } from "../../components/inputSearch";
 import { apiUrl } from "../../config";
 
 export const MyList = () => {
@@ -99,7 +99,8 @@ export const MyList = () => {
     <>
       <h3 className="title">My products</h3>
       <div className="filter__wrapper">
-        <Input
+        <InputSearch
+          
           value={selectedSearch}
           onChange={setSelectedSearch}
           placeholder="Search for product..."
