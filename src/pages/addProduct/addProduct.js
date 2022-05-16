@@ -125,7 +125,6 @@ export const ExistingProduct = () => {
     <>
       <h2 className="title">Add product</h2>
 
-      <label>Search:*</label>
       <Input
         className={errors["name"] ? " error" : ""}
         value={name}

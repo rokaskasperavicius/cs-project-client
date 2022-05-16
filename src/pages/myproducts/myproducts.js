@@ -3,6 +3,8 @@ import { useDebounce } from "use-debounce";
 import orderBy from "lodash/orderBy";
 
 import DropdownButton from "../../components/DropdownButton";
+import SortButton from "../../components/SortButton";
+import sorticon from "../../assets/icons/sorticon.svg";
 import { InputSearch } from "../../components/inputSearch";
 import { apiUrl } from "../../config";
 
@@ -114,8 +116,8 @@ export const MyList = () => {
           />
         )}
 
-        <DropdownButton
-          placeholder="Order By"
+        <SortButton
+          placeholder=""
           value={selectedOrderBy}
           onChange={setSelectedOrderBy}
           data={orderByOptions.map((c) => ({
