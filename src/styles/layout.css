@@ -1,11 +1,11 @@
 .layout {
   height: 100vh;
-  background-image: url("../components/Icons/earth.svg");
+  background-image: url("../assets/pictures/earth.svg");
   background-repeat: no-repeat;
   background-size: contain;
   background-attachment: fixed;
   background-position: center;
-
+  font-family: 'Open Sans', sans-serif;
   display: flex;
 }
 
@@ -18,3 +18,4 @@
 
   overflow-y: scroll;
 }
+
