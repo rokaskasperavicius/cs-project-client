@@ -27,8 +27,13 @@
 
 }
 
-.footer-product:hover {
+a {
+  text-decoration: none;
+}
+
+a:hover {
   text-decoration: underline;
+  text-decoration-color: white;
 }
 
 .footer-product {

@@ -128,7 +128,6 @@ export const ExistingProduct = () => {
       <label>Search:*</label>
       <Input
         className={errors["name"] ? " error" : ""}
-        
         value={name}
         onChange={setName}
         placeholder="Type product name..."
@@ -159,7 +158,6 @@ export const ExistingProduct = () => {
       <TextArea value={note} onChange={setNote} placeholder="Type notes..." />
 
       <Button onClick={handleSubmit}>Add</Button>
-      
     </>
   );
 };
