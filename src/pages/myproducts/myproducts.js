@@ -99,14 +99,13 @@ export const MyList = () => {
     <>
       <h3 className="title">My products</h3>
       <div className="filter__wrapper">
-        <InputSearch
-          
+          <InputSearch
           value={selectedSearch}
           onChange={setSelectedSearch}
           placeholder="Search for product..."
         />
-        <DropdownButton
-          placeholder="Select Category"
+          <DropdownButton
+              placeholder="*Select Category"
           value={selectedCategory}
           onChange={setSelectedCategory}
           data={categories.map((c) => ({
@@ -117,7 +116,7 @@ export const MyList = () => {
 
         {selectedCategory && (
           <DropdownButton
-            placeholder="Select Subcategory"
+            placeholder="*Select Subcategory"
             value={selectedSubcategory}
             onChange={setSelectedSubcategory}
             data={subCategories.map((c) => ({
@@ -137,7 +136,6 @@ export const MyList = () => {
           }))}
         />
       </div>
-      <h4>Products:</h4>
       <table className="desktop-view">
         <thead>
           <tr>
