@@ -104,8 +104,9 @@ export const MyList = () => {
           onChange={setSelectedSearch}
           placeholder="Search for product..."
         />
+        <h6 className="title">or select category</h6> 
           <DropdownButton
-              placeholder="*Select Category"
+              placeholder="Select Category"
           value={selectedCategory}
           onChange={setSelectedCategory}
           data={categories.map((c) => ({
