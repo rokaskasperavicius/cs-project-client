@@ -24,8 +24,6 @@ export const MyList = () => {
 
   const [debouncedSearch] = useDebounce(selectedSearch, 300);
 
-  console.log(products);
-
   useEffect(() => {
     // Fetching all categories
     fetch(apiUrl + "/categories")
@@ -41,6 +39,7 @@ export const MyList = () => {
   useEffect(() => {
     // Fail quick
     if (!selectedCategory) {
+      setSelectedSubcategory("");
       return;
     }
     // Fetch all category's subcategories
@@ -52,18 +51,6 @@ export const MyList = () => {
         }
       });
   }, [selectedCategory]);
-
-  useEffect(() => {
-    // Fetching all products
-    fetch(apiUrl + "/products")
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.success) {
-          // Set new categories
-          setProducts(res.data);
-        }
-      });
-  }, []);
 
   useEffect(() => {
     const newOrder = selectedOrderBy || "name";
@@ -83,6 +70,7 @@ export const MyList = () => {
     if (debouncedSearch) {
       parametersArray.push("search=" + encodeURIComponent(debouncedSearch));
     }
+
     const endpoint = "/products?" + parametersArray.join("&");
 
     fetch(apiUrl + endpoint)
@@ -99,19 +87,20 @@ export const MyList = () => {
     <>
       <h3 className="title">My products</h3>
       <div className="filter__wrapper">
-          <InputSearch
+        <InputSearch
           value={selectedSearch}
           onChange={setSelectedSearch}
           placeholder="Search for product..."
         />
         <h6 className="title">or select category</h6> 
-          <DropdownButton
-              placeholder="Select Category"
+        <DropdownButton
+          placeholder="Select Category"
           value={selectedCategory}
           onChange={setSelectedCategory}
           data={categories.map((c) => ({
             value: c.name,
             label: c.name,
+            
           }))}
         />
 
@@ -169,6 +158,3 @@ export const MyList = () => {
     </>
   );
 };
-
-
-
