@@ -41,6 +41,7 @@
 
 .mobile-view__product {
     border: 1px solid black;
+    background-color: white;
 }
 
 .error {
