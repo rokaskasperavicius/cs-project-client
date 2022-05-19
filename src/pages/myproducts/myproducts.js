@@ -94,30 +94,26 @@ export const MyList = () => {
           onChange={setSelectedSearch}
           placeholder="Search for product..."
         />
-                <DropdownButton
-          placeholder="Order By"
-          value={selectedOrderBy}
-          onChange={setSelectedOrderBy}
-          data={orderByOptions.map((c) => ({
-            value: c.value,
-            label: c.label,
-          }))}
-        />
-        <h6 className="title">or select category</h6> 
+               
+       
+        
+        <label>or select category</label>
         <DropdownButton
-          placeholder="Select Category"
+          placeholder="Category"
+          aria-label="ff"
           value={selectedCategory}
           onChange={setSelectedCategory}
           data={categories.map((c) => ({
             value: c.name,
             label: c.name,
             
+            
           }))}
+        
         />
-
         {selectedCategory && (
           <DropdownButton
-            placeholder="*Select Subcategory"
+            placeholder="*Subcategory"
             value={selectedSubcategory}
             onChange={setSelectedSubcategory}
             data={subCategories.map((c) => ({
@@ -157,12 +153,13 @@ export const MyList = () => {
             ))}
         </tbody>
       </table>
+      
       <div className="mobile-view">
         {products.map((p) => (
           <div className="mobile-view__product">
             <p><strong>Name: </strong> {p.name}</p>
             <p><strong>Note: </strong> {p.note}</p>
-            <p><strong>Expity date: </strong> {p.expiryDate.split("T")[0]}</p>
+            <p><strong>Expiry date: </strong> {p.expiryDate.split("T")[0]}</p>
           </div>
         ))}
       </div>
