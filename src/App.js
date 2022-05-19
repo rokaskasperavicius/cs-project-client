@@ -6,16 +6,16 @@ import { MyProfile } from "./pages/myProfile/myProfile";
 import { HomePage } from "./pages/homePage/homePage";
 
 function App() {
-    return (
-        <Layout>
-            <Routes>
-                <Route path="/addproduct" element={<ExistingProduct/>}/>
-                <Route path="/myproducts" element={<MyList/>}/>
-                <Route path="/myprofile" element={MyProfile}/>
-                <Route path="/" element={<HomePage/>}/>
-            </Routes>
-        </Layout>
-    );
+  return (
+    <Layout>
+      <Routes>
+        <Route path="/addproduct" element={<ExistingProduct />} />
+        <Route path="/myproducts" element={<MyList />} />
+        <Route path="/myprofile" element={<MyProfile />} />
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </Layout>
+  );
 }
 
 export default App;
@@ -26,5 +26,3 @@ export default App;
 const handleChange = () => {
   console.log("CALL BACKEND IMMEDIATELY");
 };
-
-
