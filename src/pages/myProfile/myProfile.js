@@ -95,7 +95,9 @@ export const MyProfile = () => {
   const handleEmailForce = () => {
     setIsEmailLoading(true);
 
-    fetch(apiUrl + "/email/force")
+    fetch(apiUrl + "/email/force", {
+      method: "POST",
+    })
       .then((res) => res.json())
       .then((res) => {
         if (res.success) {
