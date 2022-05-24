@@ -19,8 +19,6 @@ export const MyList = () => {
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const [selectedSearch, setSelectedSearch] = useState("");
   const [selectedOrderBy, setSelectedOrderBy] = useState("");
-  //const [name, setName] = useState("");
-  //const [expiryDate, setExpiryDate] = useState("");
 
 
   const orderByOptions = [
@@ -66,7 +64,7 @@ export const MyList = () => {
   }, [selectedOrderBy]);
 
   useEffect(() => {
-    // fail check
+
     const parametersArray = [];
 
     if (selectedSubcategory) {
@@ -79,6 +77,7 @@ export const MyList = () => {
 
     const endpoint = "/products?" + parametersArray.join("&");
 
+
     fetch(apiUrl + endpoint)
       .then((res) => res.json())
       .then((res) => {
@@ -89,12 +88,11 @@ export const MyList = () => {
       });
   }, [debouncedSearch, selectedSubcategory]);
 
-    const handleDelete = () => {
-
+    const handleDelete = (product) => {
         // Generate the body necessary for BE
         const body = {
-            name: products.name,
-            expiryDate: products.expiryDate,
+            name: product.name,
+            expiryDate: product.expiryDate,
         };
 
         // Delete the product
@@ -107,15 +105,13 @@ export const MyList = () => {
         })
             .then((res) => res.json())
             .then((res) => {
-                // If BE inserted the product, reset the form
-                if (res.success) {
-                    setProducts(res.data)
+                // When product deleted, get the updated list
+               if (res.success) {
+                   setProducts(products.filter((p) => p.name !== product.name))
                 }
-            }, );
+            },);
     };
-/*<Button onClick={}
-                  image={<img alt="delete icon" src={deleteIcon} width="30" height="30">} >
-          </Button>*/
+
   return (
     <>
       <h3 className="title">My products</h3>
@@ -180,7 +176,7 @@ export const MyList = () => {
                 <th>{p.name}</th>
                 <th>{p.note}</th>
                 <th>{p.expiryDate.split("T")[0]}</th>
-                  <Button onClick={handleDelete()}>Delete</Button>
+                  <Button onClick={() => handleDelete(p)}>Delete</Button>
               </tr>
             ))}
         </tbody>
@@ -192,7 +188,7 @@ export const MyList = () => {
             <p><strong>Name: </strong> {p.name}</p>
             <p><strong>Note: </strong> {p.note}</p>
             <p><strong>Expiry date: </strong> {p.expiryDate.split("T")[0]}</p>
-              <Button onClick={handleDelete()}>Delete</Button>
+              <Button onClick={() => handleDelete(p)}>Delete</Button>
           </div>
         ))}
       </div>
