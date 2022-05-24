@@ -37,7 +37,7 @@ export const HomePage = () => {
       <div className="box">
         <h3>Products expiring soon</h3>
         {products
-          .filter((p) => p.expiryDate < new Date().addDays(3).toISOString())
+          .filter((p) => p.expiryDate < new Date().addDays(5).toISOString())
           .map((p) => (
             <tr>
               <th>{p.name}</th>
