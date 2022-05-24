@@ -6,8 +6,6 @@ export const HomePage = () => {
   const [products, setProducts] = useState([]);
   const [selectedSearch] = useState("");
   const [selectedOrderBy, setSelectedOrderBy] = useState("");
-  //TODO: get possible orders from database, MP 08/05
-
 
   const [debouncedSearch] = useDebounce(selectedSearch, 300);
 

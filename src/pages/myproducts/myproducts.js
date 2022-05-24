@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import orderBy from "lodash/orderBy";
+//import deleteIcon from "/.../icons/trash.svg"
 
 import DropdownButton from "../../components/DropdownButton";
 import SortButton from "../../components/SortButton";
 import sorticon from "../../assets/icons/sorticon.svg";
 import { InputSearch } from "../../components/inputSearch";
 import { apiUrl } from "../../config";
+import {Button} from "../../components";
+import mylist from "../../assets/icons/mylist.svg";
 
 export const MyList = () => {
   const [products, setProducts] = useState([]);
@@ -16,7 +19,9 @@ export const MyList = () => {
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const [selectedSearch, setSelectedSearch] = useState("");
   const [selectedOrderBy, setSelectedOrderBy] = useState("");
-  //TODO: get possible orders from database, MP 08/05
+  //const [name, setName] = useState("");
+  //const [expiryDate, setExpiryDate] = useState("");
+
 
   const orderByOptions = [
     { label: "Name", value: "name" },
@@ -65,7 +70,6 @@ export const MyList = () => {
     const parametersArray = [];
 
     if (selectedSubcategory) {
-      //TODO: allow filtering by category, MP 08/05
       parametersArray.push("filter=" + encodeURIComponent(selectedSubcategory));
     }
 
@@ -85,6 +89,33 @@ export const MyList = () => {
       });
   }, [debouncedSearch, selectedSubcategory]);
 
+    const handleDelete = () => {
+
+        // Generate the body necessary for BE
+        const body = {
+            name: products.name,
+            expiryDate: products.expiryDate,
+        };
+
+        // Delete the product
+        fetch(apiUrl + "/products", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                // If BE inserted the product, reset the form
+                if (res.success) {
+                    setProducts(res.data)
+                }
+            }, );
+    };
+/*<Button onClick={}
+                  image={<img alt="delete icon" src={deleteIcon} width="30" height="30">} >
+          </Button>*/
   return (
     <>
       <h3 className="title">My products</h3>
@@ -139,16 +170,17 @@ export const MyList = () => {
             <th>Name</th>
             <th>Note</th>
             <th>Expiry Date</th>
+              <th></th>
           </tr>
         </thead>
         <tbody>
           {products
-            // .filter((p) => p.expiryDate < new Date().toISOString())
             .map((p) => (
               <tr>
                 <th>{p.name}</th>
                 <th>{p.note}</th>
                 <th>{p.expiryDate.split("T")[0]}</th>
+                  <Button onClick={handleDelete()}>Delete</Button>
               </tr>
             ))}
         </tbody>
@@ -160,6 +192,7 @@ export const MyList = () => {
             <p><strong>Name: </strong> {p.name}</p>
             <p><strong>Note: </strong> {p.note}</p>
             <p><strong>Expiry date: </strong> {p.expiryDate.split("T")[0]}</p>
+              <Button onClick={handleDelete()}>Delete</Button>
           </div>
         ))}
       </div>
