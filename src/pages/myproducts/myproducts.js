@@ -8,7 +8,7 @@ import SortButton from "../../components/SortButton";
 import sorticon from "../../assets/icons/sorticon.svg";
 import { InputSearch } from "../../components/inputSearch";
 import { apiUrl } from "../../config";
-import {Button} from "../../components";
+import { Button } from "../../components";
 import mylist from "../../assets/icons/mylist.svg";
 
 export const MyList = () => {
@@ -19,7 +19,6 @@ export const MyList = () => {
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const [selectedSearch, setSelectedSearch] = useState("");
   const [selectedOrderBy, setSelectedOrderBy] = useState("");
-
 
   const orderByOptions = [
     { label: "Name", value: "name" },
@@ -64,7 +63,6 @@ export const MyList = () => {
   }, [selectedOrderBy]);
 
   useEffect(() => {
-
     const parametersArray = [];
 
     if (selectedSubcategory) {
@@ -77,7 +75,6 @@ export const MyList = () => {
 
     const endpoint = "/products?" + parametersArray.join("&");
 
-
     fetch(apiUrl + endpoint)
       .then((res) => res.json())
       .then((res) => {
@@ -88,36 +85,36 @@ export const MyList = () => {
       });
   }, [debouncedSearch, selectedSubcategory]);
 
-    const handleDelete = (product) => {
-        // Generate the body necessary for BE
-        const body = {
-            name: product.name,
-            expiryDate: product.expiryDate,
-        };
+  const handleDelete = (product) => {
+    // Generate the body necessary for BE
+    const body = {
+      name: product.name,
+      expiryDate: product.expiryDate,
+    };
 
-        // Delete the product
-        fetch(apiUrl + "/products", {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
-        })
+    // Delete the product
+    fetch(apiUrl + "/products", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        // When product deleted, get the updated list
+        if (res.success) {
+          fetch(apiUrl + "/products")
             .then((res) => res.json())
             .then((res) => {
-                // When product deleted, get the updated list
-               if (res.success) {
-                   fetch(apiUrl + "/products")
-                       .then((res) => res.json())
-                       .then((res) => {
-                           if (res.success) {
-                               setProducts(res.data);
-                               setSelectedOrderBy("");
-                           }
-                       });
-                }
-            },);
-    };
+              if (res.success) {
+                setProducts(res.data);
+                setSelectedOrderBy("");
+              }
+            });
+        }
+      });
+  };
 
   return (
     <>
@@ -128,9 +125,7 @@ export const MyList = () => {
           onChange={setSelectedSearch}
           placeholder="Search for product..."
         />
-               
-       
-        
+
         <label>or select category</label>
         <DropdownButton
           placeholder="Category"
@@ -140,10 +135,7 @@ export const MyList = () => {
           data={categories.map((c) => ({
             value: c.name,
             label: c.name,
-            
-            
           }))}
-        
         />
         {selectedCategory && (
           <DropdownButton
@@ -173,29 +165,34 @@ export const MyList = () => {
             <th>Name</th>
             <th>Note</th>
             <th>Expiry Date</th>
-              <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          {products
-            .map((p) => (
-              <tr>
-                <th>{p.name}</th>
-                <th>{p.note}</th>
-                <th>{p.expiryDate.split("T")[0]}</th>
-                  <Button onClick={() => handleDelete(p)}>Delete</Button>
-              </tr>
-            ))}
+          {products.map((p) => (
+            <tr>
+              <th>{p.name}</th>
+              <th>{p.note}</th>
+              <th>{p.expiryDate.split("T")[0]}</th>
+              <Button onClick={() => handleDelete(p)}>Delete</Button>
+            </tr>
+          ))}
         </tbody>
       </table>
-      
+
       <div className="mobile-view">
         {products.map((p) => (
           <div className="mobile-view__product">
-            <p><strong>Name: </strong> {p.name}</p>
-            <p><strong>Note: </strong> {p.note}</p>
-            <p><strong>Expiry date: </strong> {p.expiryDate.split("T")[0]}</p>
-              <Button onClick={() => handleDelete(p)}>Delete</Button>
+            <p>
+              <strong>Name: </strong> {p.name}
+            </p>
+            <p>
+              <strong>Note: </strong> {p.note}
+            </p>
+            <p>
+              <strong>Expiry date: </strong> {p.expiryDate.split("T")[0]}
+            </p>
+            <Button onClick={() => handleDelete(p)}>Delete</Button>
           </div>
         ))}
       </div>
