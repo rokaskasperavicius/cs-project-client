@@ -107,7 +107,14 @@ export const MyList = () => {
             .then((res) => {
                 // When product deleted, get the updated list
                if (res.success) {
-                   setProducts(products.filter((p) => p.name !== product.name))
+                   fetch(apiUrl + "/products")
+                       .then((res) => res.json())
+                       .then((res) => {
+                           if (res.success) {
+                               setProducts(res.data);
+                               setSelectedOrderBy("");
+                           }
+                       });
                 }
             },);
     };
