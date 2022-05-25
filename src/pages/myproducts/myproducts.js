@@ -18,7 +18,7 @@ export const MyList = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const [selectedSearch, setSelectedSearch] = useState("");
-  const [selectedOrderBy, setSelectedOrderBy] = useState("");
+  const [selectedOrderBy, setSelectedOrderBy] = useState("name");
 
   const orderByOptions = [
     { label: "Name", value: "name" },
@@ -41,11 +41,12 @@ export const MyList = () => {
   }, []);
 
   useEffect(() => {
-    // Fail quick
+    // If the selectedCategory doesn't exists, remove the selected subCategory and quit the method
     if (!selectedCategory) {
       setSelectedSubcategory("");
       return;
     }
+
     // Fetch all category's subcategories
     fetch(apiUrl + "/categories/subcategories?categoryName=" + selectedCategory)
       .then((res) => res.json())
@@ -56,13 +57,8 @@ export const MyList = () => {
       });
   }, [selectedCategory]);
 
-  useEffect(() => {
-    const newOrder = selectedOrderBy || "name";
-    setProducts(orderBy(products, [newOrder]));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedOrderBy]);
-
-  useEffect(() => {
+  // This method handles fetching products with optional queries
+  const fetchProducts = () => {
     const parametersArray = [];
 
     if (selectedSubcategory) {
@@ -79,10 +75,14 @@ export const MyList = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.success) {
-          setProducts(res.data);
-          setSelectedOrderBy("");
+          // Order the new product list
+          setProducts(orderBy(res.data, [selectedOrderBy]));
         }
       });
+  };
+
+  useEffect(() => {
+    fetchProducts();
   }, [debouncedSearch, selectedSubcategory]);
 
   const handleDelete = (product) => {
@@ -102,16 +102,9 @@ export const MyList = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        // When product deleted, get the updated list
+        // When the product id deleted, fetch the updated products list
         if (res.success) {
-          fetch(apiUrl + "/products")
-            .then((res) => res.json())
-            .then((res) => {
-              if (res.success) {
-                setProducts(res.data);
-                setSelectedOrderBy("");
-              }
-            });
+          fetchProducts();
         }
       });
   };
@@ -126,7 +119,7 @@ export const MyList = () => {
           placeholder="Search for product..."
         />
 
-        <label>or select category</label>
+        <label className="filter__separator">or select category</label>
         <DropdownButton
           placeholder="Category"
           aria-label="ff"
@@ -151,8 +144,14 @@ export const MyList = () => {
 
         <SortButton
           placeholder=""
+          disableEmptyValue={true}
           value={selectedOrderBy}
-          onChange={setSelectedOrderBy}
+          onChange={(value) => {
+            setSelectedOrderBy(value);
+
+            // Order the product list with the new selected order
+            setProducts(orderBy(products, [value]));
+          }}
           data={orderByOptions.map((c) => ({
             value: c.value,
             label: c.label,
