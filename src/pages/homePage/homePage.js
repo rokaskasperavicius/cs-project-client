@@ -37,10 +37,10 @@ export const HomePage = () => {
         {products
           .filter((p) => p.expiryDate < new Date().addDays(5).toISOString())
           .map((p) => (
-            <tr>
-              <th>{p.name}</th>
-              <th>{p.expiryDate.split("T")[0]}</th>
-            </tr>
+            <div>
+              <span>{p.name}</span>
+              <span>{p.expiryDate.split("T")[0]}</span>
+            </div>
           ))}
       </div>
     </>

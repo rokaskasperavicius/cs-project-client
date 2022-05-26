@@ -2,24 +2,47 @@
 https://stackoverflow.com/questions/65864594/html-and-css-table-grid-design */
 
 th {
-  flex-basis: 33.333%;
+  flex-basis: calc(85% / 2);
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  display: flex;
   align-items: center;
   font-weight: normal;
+  position: relative;
+}
+
+th:hover {
+  /*white-space: break-spaces;*/
+}
+
+
+.full {
+  position: absolute;
+}
+
+th:last-child {
+  flex-basis: 5%;
+}
+
+th:nth-child(3) {
+  flex-basis: 10%;
 }
 
 tr {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  gap: 20px;
+  align-items: center;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
   margin-bottom: 1em;
   padding: 1em;
+}
+
+tr > th:last-child {
+  width: 40px;
 }
 
 thead {
@@ -30,13 +53,17 @@ thead > tr > th {
   font-weight: bold;
 }
 
-tbody > tr{ 
+tbody > tr{
   border-radius: 2em;
   background-color: white;
   margin-bottom: 20px;
   -moz-box-shadow: 0 0 3px gray;
   -webkit-box-shadow: 0 0 3px gray;
   box-shadow: 0 0 5px gray;
+}
+
+tbody > tr > th:last-child {
+  cursor: pointer;
 }
 
 table {
@@ -48,4 +75,5 @@ table {
   box-shadow: 4px 4px 1px 1px rgba(0, 0, 0, 0.2);
   padding-left: 30px;
   padding-right: 30px;
+  table-layout: fixed;
 }

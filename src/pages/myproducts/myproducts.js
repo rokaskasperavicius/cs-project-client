@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import orderBy from "lodash/orderBy";
-//import deleteIcon from "/.../icons/trash.svg"
+import TrashIcon from "../../assets/icons/trash.svg"
+import * as HoverCard from '@radix-ui/react-hover-card';
 
 import DropdownButton from "../../components/DropdownButton";
 import SortButton from "../../components/SortButton";
@@ -19,6 +20,9 @@ export const MyList = () => {
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const [selectedSearch, setSelectedSearch] = useState("");
   const [selectedOrderBy, setSelectedOrderBy] = useState("name");
+
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const orderByOptions = [
     { label: "Name", value: "name" },
@@ -70,7 +74,7 @@ export const MyList = () => {
     }
 
     const endpoint = "/products?" + parametersArray.join("&");
-
+    setIsLoading(true)
     fetch(apiUrl + endpoint)
       .then((res) => res.json())
       .then((res) => {
@@ -78,7 +82,7 @@ export const MyList = () => {
           // Order the new product list
           setProducts(orderBy(res.data, [selectedOrderBy]));
         }
-      });
+      }).finally(() => setIsLoading(false))
   };
 
   useEffect(() => {
@@ -158,26 +162,42 @@ export const MyList = () => {
           }))}
         />
       </div>
-      <table className="desktop-view">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Note</th>
-            <th>Expiry Date</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((p) => (
+      {false && (
+          <div>LOADING...</div>
+      )}
+      {true && (
+          <table className="desktop-view">
+            <thead>
             <tr>
-              <th>{p.name}</th>
-              <th>{p.note}</th>
-              <th>{p.expiryDate.split("T")[0]}</th>
-              <Button onClick={() => handleDelete(p)}>Delete</Button>
+              <th>Name</th>
+              <th>Note</th>
+              <th>Expiry Date</th>
+              <th></th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+            {products.map((p) => (
+                <tr>
+                  <th>{p.name}</th>
+                  <th>
+                    <HoverCard.Root>
+                      <HoverCard.Trigger>
+                        {p.note}
+                      </HoverCard.Trigger>
+                      <HoverCard.Content>
+                        {p.note}
+                      </HoverCard.Content>
+                    </HoverCard.Root>
+                  </th>
+                  <th>{p.expiryDate.split("T")[0]}</th>
+                  <th onClick={() => handleDelete(p)}>
+                    <img src={TrashIcon} width={30} alt='Trash icon' />
+                  </th>
+                </tr>
+            ))}
+            </tbody>
+          </table>
+      )}
 
       <div className="mobile-view">
         {products.map((p) => (
