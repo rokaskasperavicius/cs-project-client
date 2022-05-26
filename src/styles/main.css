@@ -12,3 +12,8 @@
 @import "inputSearch.css";
 @import "sortbutton.css";
 @import "profile.css";
+
+#root {
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Open Sans', sans-serif !important;
+}

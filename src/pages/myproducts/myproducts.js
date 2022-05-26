@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import orderBy from "lodash/orderBy";
+//import deleteIcon from "/.../icons/trash.svg"
 
 import DropdownButton from "../../components/DropdownButton";
 import SortButton from "../../components/SortButton";
 import sorticon from "../../assets/icons/sorticon.svg";
 import { InputSearch } from "../../components/inputSearch";
 import { apiUrl } from "../../config";
+import { Button } from "../../components";
+import mylist from "../../assets/icons/mylist.svg";
 
 export const MyList = () => {
   const [products, setProducts] = useState([]);
@@ -15,8 +18,7 @@ export const MyList = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const [selectedSearch, setSelectedSearch] = useState("");
-  const [selectedOrderBy, setSelectedOrderBy] = useState("");
-  //TODO: get possible orders from database, MP 08/05
+  const [selectedOrderBy, setSelectedOrderBy] = useState("name");
 
   const orderByOptions = [
     { label: "Name", value: "name" },
@@ -39,11 +41,12 @@ export const MyList = () => {
   }, []);
 
   useEffect(() => {
-    // Fail quick
+    // If the selectedCategory doesn't exists, remove the selected subCategory and quit the method
     if (!selectedCategory) {
       setSelectedSubcategory("");
       return;
     }
+
     // Fetch all category's subcategories
     fetch(apiUrl + "/categories/subcategories?categoryName=" + selectedCategory)
       .then((res) => res.json())
@@ -54,18 +57,11 @@ export const MyList = () => {
       });
   }, [selectedCategory]);
 
-  useEffect(() => {
-    const newOrder = selectedOrderBy || "name";
-    setProducts(orderBy(products, [newOrder]));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedOrderBy]);
-
-  useEffect(() => {
-    // fail check
+  // This method handles fetching products with optional queries
+  const fetchProducts = () => {
     const parametersArray = [];
 
     if (selectedSubcategory) {
-      //TODO: allow filtering by category, MP 08/05
       parametersArray.push("filter=" + encodeURIComponent(selectedSubcategory));
     }
 
@@ -79,11 +75,39 @@ export const MyList = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.success) {
-          setProducts(res.data);
-          setSelectedOrderBy("");
+          // Order the new product list
+          setProducts(orderBy(res.data, [selectedOrderBy]));
         }
       });
+  };
+
+  useEffect(() => {
+    fetchProducts();
   }, [debouncedSearch, selectedSubcategory]);
+
+  const handleDelete = (product) => {
+    // Generate the body necessary for BE
+    const body = {
+      name: product.name,
+      expiryDate: product.expiryDate,
+    };
+
+    // Delete the product
+    fetch(apiUrl + "/products", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        // When the product id deleted, fetch the updated products list
+        if (res.success) {
+          fetchProducts();
+        }
+      });
+  };
 
   return (
     <>
@@ -94,10 +118,8 @@ export const MyList = () => {
           onChange={setSelectedSearch}
           placeholder="Search for product..."
         />
-               
-       
-        
-        <label>or select category</label>
+
+        <label className="filter__separator">or select category</label>
         <DropdownButton
           placeholder="Category"
           aria-label="ff"
@@ -106,10 +128,7 @@ export const MyList = () => {
           data={categories.map((c) => ({
             value: c.name,
             label: c.name,
-            
-            
           }))}
-        
         />
         {selectedCategory && (
           <DropdownButton
@@ -125,8 +144,14 @@ export const MyList = () => {
 
         <SortButton
           placeholder=""
+          disableEmptyValue={true}
           value={selectedOrderBy}
-          onChange={setSelectedOrderBy}
+          onChange={(value) => {
+            setSelectedOrderBy(value);
+
+            // Order the product list with the new selected order
+            setProducts(orderBy(products, [value]));
+          }}
           data={orderByOptions.map((c) => ({
             value: c.value,
             label: c.label,
@@ -139,27 +164,34 @@ export const MyList = () => {
             <th>Name</th>
             <th>Note</th>
             <th>Expiry Date</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          {products
-            // .filter((p) => p.expiryDate < new Date().toISOString())
-            .map((p) => (
-              <tr>
-                <th>{p.name}</th>
-                <th>{p.note}</th>
-                <th>{p.expiryDate.split("T")[0]}</th>
-              </tr>
-            ))}
+          {products.map((p) => (
+            <tr>
+              <th>{p.name}</th>
+              <th>{p.note}</th>
+              <th>{p.expiryDate.split("T")[0]}</th>
+              <Button onClick={() => handleDelete(p)}>Delete</Button>
+            </tr>
+          ))}
         </tbody>
       </table>
-      
+
       <div className="mobile-view">
         {products.map((p) => (
           <div className="mobile-view__product">
-            <p><strong>Name: </strong> {p.name}</p>
-            <p><strong>Note: </strong> {p.note}</p>
-            <p><strong>Expiry date: </strong> {p.expiryDate.split("T")[0]}</p>
+            <p>
+              <strong>Name: </strong> {p.name}
+            </p>
+            <p>
+              <strong>Note: </strong> {p.note}
+            </p>
+            <p>
+              <strong>Expiry date: </strong> {p.expiryDate.split("T")[0]}
+            </p>
+            <Button onClick={() => handleDelete(p)}>Delete</Button>
           </div>
         ))}
       </div>

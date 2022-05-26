@@ -5,9 +5,9 @@
   background-size: contain;
   background-attachment: fixed;
   background-position: center;
-  font-family: 'Open Sans', sans-serif;
   display: flex;
 }
+
 
 .page-content {
   margin-top: 60px;
