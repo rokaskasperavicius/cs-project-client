@@ -123,7 +123,7 @@ export const ExistingProduct = () => {
 
   return (
     <>
-      <h2 className="title">Add product</h2>
+      <h3 className="title">Add product</h3>
 
       <Input
         className={errors["name"] ? " error" : ""}
