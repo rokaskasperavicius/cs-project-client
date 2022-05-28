@@ -13,17 +13,17 @@
 }
 
 .footer__title {
-  font-size: 24px;
+  font-size: 14px;
 }
 
 .footer-product__wrapper {
   display: flex;
-  gap: 50px;
+  gap: 90px;
   margin-right: auto;
   margin-left: auto;
   max-width: 960px;
-  padding-right: 20px;
-  padding-left: 20px;
+  padding-right: 20px; 
+  padding-left:  20px;
 }
 
 a {
@@ -41,6 +41,14 @@ a:hover {
   align-items: center;
 }
 
+
 .footer-product > img {
   margin-left: 5px;
 }
+
+@media (max-width: 720px) {
+  .footer-product > span {
+    display: none;
+  }
+}
+

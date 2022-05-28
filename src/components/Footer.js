@@ -9,19 +9,19 @@ export const Footer = () => (
     <div className="footer-product__wrapper">
       <Link to="/myproducts" activeStyle>
         <p className="footer-product">
-          My products
+          <span>My products</span>
           <img alt="list icon" src={mylist} width="30" height="30" />
         </p>
       </Link>
       <Link to="/addproduct" activeStyle>
         <p className="footer-product">
-          Add product
+          <span>Add product</span>
           <img alt="product icon" src={addproduct} width="30" height="30" />
         </p>
       </Link>
       <Link to="/myprofile" activeStyle>
         <p className="footer-product">
-          My profile
+          <span>My profile</span>
           <img alt="profile icon" src={myprofile} width="30" height="30" />
         </p>
       </Link>
