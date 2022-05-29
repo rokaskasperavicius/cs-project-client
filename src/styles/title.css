@@ -46,6 +46,13 @@
   border: 1px solid black;
   width: 100%;
   background-color: white;
+  border-radius: 10px;
+  padding: 4px;
+  padding-left: 6px;
+}
+
+.mobile-view__product > p > a {
+  float: right;
 }
 
 .mobile-view__search {
