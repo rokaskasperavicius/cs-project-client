@@ -1,20 +1,27 @@
+@import "keyframes.css";
 @import "layout.css";
 @import "footer.css";
 @import "header.css";
 @import "table.css";
 @import "button.css";
-@import "title.css";
 @import "dropdown.css";
 @import "input.css";
 @import "textarea.css";
-@import "container.css";
 @import "box.css";
-@import "inputSearch.css";
 @import "sortbutton.css";
 @import "profile.css";
 @import "addProduct.css";
+@import "myProducts.css";
+@import "form.css";
 
 #root {
   -webkit-font-smoothing: antialiased;
-  font-family: 'Open Sans', sans-serif !important;
+  font-family: "Open Sans", sans-serif !important;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
 }

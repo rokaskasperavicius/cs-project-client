@@ -1,0 +1,16 @@
+form {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.error-field {
+  border: 1px solid red;
+  animation: shake 0.7s linear;
+}
+
+.error {
+  color: red;
+}

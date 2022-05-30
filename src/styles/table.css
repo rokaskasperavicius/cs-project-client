@@ -11,21 +11,12 @@ th {
   position: relative;
 }
 
-th:hover {
-  /*white-space: break-spaces;*/
-}
-
-
-.full {
-  position: absolute;
+th:nth-child(3) {
+  flex-basis: 100px;
 }
 
 th:last-child {
-  flex-basis: 5%;
-}
-
-th:nth-child(3) {
-  flex-basis: 10%;
+  flex-basis: 40px;
 }
 
 tr {
@@ -41,10 +32,6 @@ tr {
   padding: 1em;
 }
 
-tr > th:last-child {
-  width: 40px;
-}
-
 thead {
   text-align: center;
 }
@@ -53,7 +40,7 @@ thead > tr > th {
   font-weight: bold;
 }
 
-tbody > tr{
+tbody > tr {
   border-radius: 2em;
   background-color: white;
   margin-bottom: 20px;

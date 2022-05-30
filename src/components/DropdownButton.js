@@ -1,8 +1,8 @@
 import React from "react";
 
 const DropdownButton = React.forwardRef(
-  ({ options, placeholder, ...props }, ref) => (
-    <select {...props} ref={ref} className="dropdown">
+  ({ options, placeholder, className, ...props }, ref) => (
+    <select {...props} ref={ref} className={"dropdown " + className}>
       <option value="">{placeholder}</option>
       {options.map((item, key) => (
         <option key={key} value={item.name}>

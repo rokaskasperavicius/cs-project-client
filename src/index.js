@@ -7,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 import App from "./App";
 
-import "./index.css";
 import "./styles/main.css";
 
 ReactDOM.render(

@@ -22,10 +22,6 @@
   gap: 10px;
 }
 
-/*.header-product:hover {
-    text-decoration: underline;
-  }*/
-
 .header-product {
   cursor: pointer;
 }

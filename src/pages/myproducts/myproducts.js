@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import orderBy from "lodash/orderBy";
-import TrashIcon from "../../assets/icons/trash.svg";
-
-import DropdownButton from "../../components/DropdownButton";
-import SortButton from "../../components/SortButton";
-import { InputSearch } from "../../components/inputSearch";
-import { apiUrl } from "../../config";
 import { toast } from "react-toastify";
 
-export const MyList = () => {
+// Assets
+import TrashIcon from "../../assets/icons/trash.svg";
+
+// Components
+import DropdownButton from "../../components/DropdownButton";
+import SortButton from "../../components/SortButton";
+import { Input } from "../../components/Input";
+
+// Config
+import { apiUrl } from "../../config";
+
+export const MyProducts = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
@@ -17,8 +22,6 @@ export const MyList = () => {
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const [selectedSearch, setSelectedSearch] = useState("");
   const [selectedOrderBy, setSelectedOrderBy] = useState("name");
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const orderByOptions = [
     { label: "Name", value: "name" },
@@ -70,7 +73,7 @@ export const MyList = () => {
     }
 
     const endpoint = "/products?" + parametersArray.join("&");
-    setIsLoading(true);
+
     fetch(apiUrl + endpoint)
       .then((res) => res.json())
       .then((res) => {
@@ -78,44 +81,39 @@ export const MyList = () => {
           // Order the new product list
           setProducts(orderBy(res.data, [selectedOrderBy]));
         }
-      })
-      .finally(() => setIsLoading(false));
+      });
   };
 
   useEffect(() => {
     fetchProducts();
   }, [debouncedSearch, selectedSubcategory]);
 
-  const handleDelete = (product) => {
-    // Generate the body necessary for BE
-    const body = {
-      name: product.name,
-      expiryDate: product.expiryDate,
-    };
-
+  const handleDelete = ({ name, expiryDate }) => {
     // Delete the product
     fetch(apiUrl + "/products", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify({ name, expiryDate }),
     })
       .then((res) => res.json())
       .then((res) => {
-        // When the product id deleted, fetch the updated products list
+        // When the product is deleted, fetch the updated products list
         if (res.success) {
           fetchProducts();
-          toast("Product is deleted", { toastId: "myproducts-delete-success" });
+          toast("The product was deleted");
+        } else {
+          toast("Something went wrong");
         }
       });
   };
 
   return (
-    <>
+    <div className="my-products">
       <h3 className="title">My products</h3>
       <div className="filter__wrapper">
-        <InputSearch
+        <Input
           value={selectedSearch}
           onChange={setSelectedSearch}
           placeholder="Search for product..."
@@ -153,32 +151,28 @@ export const MyList = () => {
           }))}
         />
       </div>
-      {isLoading && <div>Loading...</div>}
-      {!isLoading && (
-        <table className="desktop-view">
-          <thead>
+      <table className="desktop-view">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Note</th>
+            <th>Expiry Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((p) => (
             <tr>
-              <th>Name</th>
-              <th>Note</th>
-              <th>Expiry Date</th>
-              <th></th>
+              <th>{p.name}</th>
+              <th>{p.note}</th>
+              <th>{p.expiryDate.split("T")[0]}</th>
+              <th onClick={() => handleDelete(p)}>
+                <img src={TrashIcon} width={30} alt="Trash icon" />
+              </th>
             </tr>
-          </thead>
-          <tbody>
-            {products.map((p) => (
-              <tr>
-                <th>{p.name}</th>
-                <th>{p.note}</th>
-                <th>{p.expiryDate.split("T")[0]}</th>
-                <th onClick={() => handleDelete(p)}>
-                  <img src={TrashIcon} width={30} alt="Trash icon" />
-                </th>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-
+          ))}
+        </tbody>
+      </table>
       <div className="mobile-view">
         {products.map((p) => (
           <div className="mobile-view__product">
@@ -197,6 +191,6 @@ export const MyList = () => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };

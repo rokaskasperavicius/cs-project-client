@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
+// Components
 import { Button } from "../../components/Button";
 import DropdownButton from "../../components/DropdownButton";
 import { Input } from "../../components/Input";
 import { TextArea } from "../../components/TextArea";
+
+// Config
 import { apiUrl } from "../../config";
-import { toast } from "react-toastify";
 
 export const ExistingProduct = () => {
   const {
@@ -98,10 +101,10 @@ export const ExistingProduct = () => {
   };
 
   return (
-    <>
+    <div className="add-product">
       <h3 className="title">Add product</h3>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="add-product__wrapper">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <Input
             {...register("name", {
@@ -109,8 +112,9 @@ export const ExistingProduct = () => {
               maxLength: { value: 90, message: "Name is too long" },
             })}
             placeholder="Type product name..."
+            className={errors["name"] ? " error-field" : ""}
           />
-          <p className="error-field">{errors["name"]?.message}</p>
+          {errors["name"] && <p className="error">{errors["name"]?.message}</p>}
         </div>
 
         <div>
@@ -120,8 +124,11 @@ export const ExistingProduct = () => {
             })}
             placeholder="Select category"
             options={categories}
+            className={errors["category"] ? " error-field" : ""}
           />
-          <p className="error-field">{errors["category"]?.message}</p>
+          {errors["category"] && (
+            <p className="error">{errors["category"]?.message}</p>
+          )}
         </div>
 
         {category && (
@@ -132,8 +139,11 @@ export const ExistingProduct = () => {
               })}
               placeholder="Select subcategory"
               options={subCategories}
+              className={errors["subCategory"] ? " error-field" : ""}
             />
-            <p className="error-field">{errors["subCategory"]?.message}</p>
+            {errors["subCategory"] && (
+              <p className="error">{errors["subCategory"]?.message}</p>
+            )}
           </div>
         )}
 
@@ -146,8 +156,11 @@ export const ExistingProduct = () => {
                 new Date(date) > new Date() ||
                 "Expiry date must be in the future",
             })}
+            className={errors["expiryDate"] ? " error-field" : ""}
           />
-          <p className="error-field">{errors["expiryDate"]?.message}</p>
+          {errors["expiryDate"] && (
+            <p className="error">{errors["expiryDate"]?.message}</p>
+          )}
         </div>
 
         <div>
@@ -156,53 +169,15 @@ export const ExistingProduct = () => {
               maxLength: { value: 900, message: "Note is too long" },
             })}
             placeholder="Type notes..."
+            className={errors["note"] ? " error-field" : ""}
           />
-          <p className="error-field">{errors["note"]?.message}</p>
+          {errors["note"] && <p className="error">{errors["note"]?.message}</p>}
         </div>
 
         <Button disabled={isSubmitting} onClick={handleSubmit}>
           Add
         </Button>
       </form>
-      {/* <div className="add-product__wrapper">
-        <Input
-          className={errors["name"] ? " error" : ""}
-          value={name}
-          onChange={setName}
-          placeholder="Type product name..."
-        />
-
-        <DropdownButton
-          placeholder="Select Category"
-          value={selectedCategory}
-          onChange={setSelectedCategory}
-          data={categories.map((c) => ({
-            value: c.name,
-            label: c.name,
-          }))}
-        />
-
-        <DropdownButton
-          placeholder="Select Subcategory"
-          value={selectedSubCategory}
-          onChange={setSelectedSubCategory}
-          data={subCategories.map((c) => ({
-            value: c.name,
-            label: c.name,
-          }))}
-        />
-
-        <Input
-          value={expiryDate}
-          onChange={setExpiryDate}
-          type="date"
-          placeholder="yasudasd"
-        />
-
-        <TextArea value={note} onChange={setNote} placeholder="Type notes..." />
-
-        <Button onClick={handleSubmit}>Add</Button>
-      </div> */}
-    </>
+    </div>
   );
 };

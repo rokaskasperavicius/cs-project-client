@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useDebounce } from "use-debounce";
+
+// Config
 import { apiUrl } from "../../config";
 
 export const HomePage = () => {
   const [products, setProducts] = useState([]);
-  const [selectedSearch] = useState("");
-  const [selectedOrderBy, setSelectedOrderBy] = useState("");
-
-  const [debouncedSearch] = useDebounce(selectedSearch, 300);
-
-  console.log(products);
 
   useEffect(() => {
     // Fetching all products
@@ -29,14 +24,29 @@ export const HomePage = () => {
     return date;
   };
 
+  const foodProducts = products.filter((p) => p.categoryName === "Food");
+  const medCosProducts = products.filter((p) => p.categoryName !== "Food");
+
+  console.log(foodProducts, medCosProducts);
+
   return (
     <>
       <h2 className="title">Welcome</h2>
       <div className="box">
         <h3>Products expiring soon</h3>
         <div className="box__wrapper">
-          {products
-            .filter((p) => p.expiryDate < new Date().addDays(5).toISOString())
+          <div>Food</div>
+          {foodProducts
+            .filter((p) => p.expiryDate <= new Date().addDays(1).toISOString())
+            .map((p) => (
+              <div>
+                <span>{p.name}</span>
+                <span>{p.expiryDate.split("T")[0]}</span>
+              </div>
+            ))}
+          <div>Medicine and Cosmetics</div>
+          {medCosProducts
+            .filter((p) => p.expiryDate <= new Date().addDays(30).toISOString())
             .map((p) => (
               <div>
                 <span>{p.name}</span>

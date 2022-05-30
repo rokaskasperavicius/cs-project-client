@@ -1,18 +1,21 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
 
-import { InputSearch } from "../../components/inputSearch";
+import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { apiUrl } from "../../config";
 
 export const MyProfile = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [initialEmail, setInitialEmail] = useState("");
+  const {
+    register,
+    handleSubmit,
+    watch,
+    getValues,
+    reset,
+    formState: { errors, isSubmitting, isDirty },
+  } = useForm();
 
-  const [errors, setErrors] = useState({});
-
-  const [isLoading, setIsLoading] = useState(false);
   const [isEmailLoading, setIsEmailLoading] = useState(false);
 
   useEffect(() => {
@@ -20,79 +23,30 @@ export const MyProfile = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.success) {
-          setName(res.data.name);
-          setEmail(res.data.email);
-          setInitialEmail(res.data.email);
+          reset(res.data);
         }
       });
   }, []);
 
-  const updateName = (name) => {
-    if (!name) {
-      setErrors({
-        ...errors,
-        name: "Field is required",
-      });
-    } else if (name.length > 95) {
-      setErrors({
-        ...errors,
-        name: "Field is too long",
-      });
-    } else {
-      delete errors["name"];
-      setErrors(errors);
-    }
-
-    setName(name);
-  };
-
-  const updateEmail = (email) => {
-    if (!email) {
-      setErrors({
-        ...errors,
-        email: "Field is required",
-      });
-    } else if (email.length > 95) {
-      setErrors({
-        ...errors,
-        email: "Field is too long",
-      });
-    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      setErrors({
-        ...errors,
-        email: "Field is invalid",
-      });
-    } else {
-      delete errors["email"];
-      setErrors(errors);
-    }
-
-    setEmail(email);
-  };
-
-  const handleSubmit = () => {
-    setIsLoading(true);
-
+  const onSubmit = (data) => {
     fetch(apiUrl + "/email/config", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email }),
+      body: JSON.stringify(data),
     })
       .then((res) => res.json())
       .then((res) => {
         if (res.success) {
-          setInitialEmail(email);
           toast("Config updated", { toastId: "myprofile-success" });
+          reset(data);
+        } else {
+          toast("Something went wrong", {
+            toastId: "myprofile-error",
+          });
         }
-      })
-      .catch(() => {
-        toast("Something went wrong", {
-          toastId: "myprofile-error",
-        });
-      })
-      .finally(() => setIsLoading(false));
+      });
   };
 
   const handleEmailForce = () => {
@@ -104,15 +58,14 @@ export const MyProfile = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.success) {
-          toast("Email sent to " + initialEmail, {
+          toast("Email sent to " + getValues("email"), {
             toastId: "myprofile-email-success",
           });
+        } else {
+          toast("Something went wrong", {
+            toastId: "myprofile-email-error",
+          });
         }
-      })
-      .catch(() => {
-        toast("Something went wrong", {
-          toastId: "myprofile-email-error",
-        });
       })
       .finally(() => setIsEmailLoading(false));
   };
@@ -120,36 +73,43 @@ export const MyProfile = () => {
   return (
     <div className="profile">
       <h3 className="title">My profile</h3>
-      <div className="name__wrapper">
-        <label htmlFor="name">Name</label>
-        <InputSearch
-          id="name"
-          placeholder="Type name..."
-          value={name}
-          onChange={updateName}
-        />
-        <p className="name__error">{errors["name"]}</p>
-      </div>
-      <div>
-        <label htmlFor="email">Email</label>
-        <InputSearch
-          id="email"
-          placeholder="Type email..."
-          value={email}
-          onChange={updateEmail}
-        />
-        <p className="email__error">{errors["email"]}</p>
-      </div>
-      <Button
-        disabled={isLoading || Object.keys(errors).length > 0}
-        onClick={handleSubmit}
-      >
-        Save
-      </Button>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <Input
+            {...register("name", {
+              required: "Name is required",
+              maxLength: { value: 90, message: "Name is too long" },
+            })}
+            placeholder="Type name..."
+            className={errors["name"] ? " error-field" : ""}
+          />
+          {errors["name"] && <p className="error">{errors["name"]?.message}</p>}
+        </div>
+        <div>
+          <Input
+            {...register("email", {
+              required: "Email is required",
+              maxLength: { value: 90, message: "Email is too long" },
+              pattern: {
+                value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                message: "Invalid email",
+              },
+            })}
+            placeholder="Type email..."
+            className={errors["email"] ? " error-field" : ""}
+          />
+          {errors["email"] && (
+            <p className="error">{errors["email"]?.message}</p>
+          )}
+        </div>
+        <Button disabled={isSubmitting || !isDirty} onClick={handleSubmit}>
+          Save
+        </Button>
 
-      <Button disabled={isEmailLoading} onClick={handleEmailForce}>
-        Send test email
-      </Button>
+        <Button disabled={isEmailLoading || isDirty} onClick={handleEmailForce}>
+          Send test email
+        </Button>
+      </form>
     </div>
   );
 };
