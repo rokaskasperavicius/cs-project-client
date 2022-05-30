@@ -12,6 +12,7 @@
 @import "inputSearch.css";
 @import "sortbutton.css";
 @import "profile.css";
+@import "addProduct.css";
 
 #root {
   -webkit-font-smoothing: antialiased;

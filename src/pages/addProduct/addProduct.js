@@ -4,6 +4,7 @@ import DropdownButton from "../../components/DropdownButton";
 import { Input } from "../../components/Input";
 import { TextArea } from "../../components/TextArea";
 import { apiUrl } from "../../config";
+import {toast} from "react-toastify";
 
 export const ExistingProduct = () => {
   const [categories, setCategories] = useState([]);
@@ -17,20 +18,63 @@ export const ExistingProduct = () => {
 
   const [errors, setErrors] = useState(false);
 
-  useEffect(() => {
-    console.log(name.length);
-    if (name.length > 90) {
-      setErrors({
-        ...errors,
-        name: "Date should be in the future",
-      });
-    } else {
-      setErrors({
-        ...errors,
-        name: false,
-      });
-    }
-  }, [name]);
+    const updateName = (name) => {
+        if (!name) {
+            setErrors({
+                ...errors,
+                name: "Field is required",
+            });
+        } else if (name.length > 95) {
+            setErrors({
+                ...errors,
+                name: "Field is too long",
+            });
+        } else {
+            delete errors["name"];
+            setErrors(errors);
+        }
+
+        setName(name);
+    };
+    const updateCategories= (selectedCategory) => {
+        if (!selectedCategory) {
+            setErrors({
+                ...errors,
+                selectedCategory: "Category required",
+            });
+        } else {
+            delete errors["selectedCategory"];
+            setErrors(errors);
+        }
+
+        setSelectedCategory(selectedCategory);
+    };
+    const updateSubcategories= (selectedSubCategory) => {
+        if (!selectedSubCategory) {
+            setErrors({
+                ...errors,
+                selectedSubCategory: "Subcategory required",
+            });
+        } else {
+            delete errors["selectedSubCategory"];
+            setErrors(errors);
+        }
+
+        setSelectedSubCategory(selectedSubCategory);
+    };
+    const updateCalendar= (expiryDate) => {
+        if (!expiryDate) {
+            setErrors({
+                ...errors,
+                expiryDate: "Date required",
+            });
+        } else {
+            delete errors["expiryDate"];
+            setErrors(errors);
+        }
+
+        setExpiryDate(expiryDate);
+    };
 
   useEffect(() => {
     // Fetching all categories
@@ -54,7 +98,6 @@ export const ExistingProduct = () => {
     if (!selectedCategory) {
       return;
     }
-
     // Fetch all category's subcategories
     fetch(apiUrl + "/categories/subcategories?categoryName=" + selectedCategory)
       .then((res) => res.json())
@@ -76,15 +119,20 @@ export const ExistingProduct = () => {
 
   // Controller
   const handleSubmit = () => {
-    console.log(expiryDate, name);
+      toast("Product is added", {toastId: "addproduct-add-success"});
+      console.log(expiryDate, name);
+      return;
     // Fail quick
     if (!(expiryDate && name && selectedSubCategory)) {
+        //toast("Missing product name, subcategory or expiry date", {toastId: "addproduct-missing-success"});
       return;
-    }
 
+    }
     // If the selected expiry date is in the past, fail the form submission
     if (new Date(expiryDate) < new Date()) {
+        //toast("Expiry date in the past", {toastId: "addproduct-past-success"});
       return;
+
     }
 
     // Generate the body necessary for BE
@@ -125,34 +173,48 @@ export const ExistingProduct = () => {
     <>
       <h3 className="title">Add product</h3>
 
-      <Input
-        className={errors["name"] ? " error" : ""}
-        value={name}
-        onChange={setName}
-        placeholder="Type product name..."
-      />
+        <div>
+            <Input
+                value={name}
+                onChange={updateName}
+                placeholder="Type product name..."
+                />
+            <p className="name__error">{errors["name"]}</p>
+        </div>
 
-      <DropdownButton
-        placeholder="Select Category"
-        value={selectedCategory}
-        onChange={setSelectedCategory}
-        data={categories.map((c) => ({
-          value: c.name,
-          label: c.name,
-        }))}
-      />
+        <div>
+            <DropdownButton
+                placeholder="Select Category"
+                value={selectedCategory}
+                onChange={updateCategories}
+                data={categories.map((c) => ({
+                    value: c.name,
+                    label: c.name,
+                }))}
+            />
+            <p className="categories__error">{errors["selectedCategory"]}</p>
+        </div>
 
-      <DropdownButton
-        placeholder="Select Subcategory"
-        value={selectedSubCategory}
-        onChange={setSelectedSubCategory}
-        data={subCategories.map((c) => ({
-          value: c.name,
-          label: c.name,
-        }))}
-      />
+        {selectedCategory && (
+        <div>
+            <DropdownButton
+                placeholder="Select Subcategory"
+                value={selectedSubCategory}
+                onChange={updateSubcategories}
+                data={subCategories.map((c) => ({
+                    value: c.name,
+                    label: c.name,
+                }))}
+            />
+            <p className="subcategories__error">{errors["selectedSubCategory"]}</p>
+        </div>)}
 
-      <Input value={expiryDate} onChange={setExpiryDate} type="date" />
+        <div>
+            <Input value={expiryDate}
+                   onChange={updateCalendar}
+                   type="date" />
+            <p className="calendar__error">{errors["expiryDate"]}</p>
+        </div>
 
       <TextArea value={note} onChange={setNote} placeholder="Type notes..." />
 

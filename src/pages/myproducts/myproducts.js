@@ -6,11 +6,11 @@ import * as HoverCard from '@radix-ui/react-hover-card';
 
 import DropdownButton from "../../components/DropdownButton";
 import SortButton from "../../components/SortButton";
-import sorticon from "../../assets/icons/sorticon.svg";
 import { InputSearch } from "../../components/inputSearch";
 import { apiUrl } from "../../config";
 import { Button } from "../../components";
 import mylist from "../../assets/icons/mylist.svg";
+import {toast} from "react-toastify";
 
 export const MyList = () => {
   const [products, setProducts] = useState([]);
@@ -109,6 +109,7 @@ export const MyList = () => {
         // When the product id deleted, fetch the updated products list
         if (res.success) {
           fetchProducts();
+          toast("Product is deleted", {toastId: "myproducts-delete-success"});
         }
       });
   };

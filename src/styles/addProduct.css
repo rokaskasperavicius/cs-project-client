@@ -1,0 +1,4 @@
+.addProduct .input__error, .addProduct .categories__error, .addProduct .subcategories__error, .addProduct .calendar__error {
+    color: red;
+    margin-top: -8px;
+}
