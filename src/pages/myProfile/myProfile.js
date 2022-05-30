@@ -8,6 +8,7 @@ import { apiUrl } from "../../config";
 export const MyProfile = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [initialEmail, setInitialEmail] = useState("");
 
   const [errors, setErrors] = useState({});
 
@@ -21,6 +22,7 @@ export const MyProfile = () => {
         if (res.success) {
           setName(res.data.name);
           setEmail(res.data.email);
+          setInitialEmail(res.data.email);
         }
       });
   }, []);
@@ -81,6 +83,7 @@ export const MyProfile = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.success) {
+          setInitialEmail(email);
           toast("Config updated", { toastId: "myprofile-success" });
         }
       })
@@ -101,7 +104,9 @@ export const MyProfile = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.success) {
-          toast("Email sent", { toastId: "myprofile-email-success" });
+          toast("Email sent to " + initialEmail, {
+            toastId: "myprofile-email-success",
+          });
         }
       })
       .catch(() => {
@@ -115,7 +120,6 @@ export const MyProfile = () => {
   return (
     <div className="profile">
       <h3 className="title">My profile</h3>
-
       <div className="name__wrapper">
         <label htmlFor="name">Name</label>
         <InputSearch
@@ -126,7 +130,6 @@ export const MyProfile = () => {
         />
         <p className="name__error">{errors["name"]}</p>
       </div>
-
       <div>
         <label htmlFor="email">Email</label>
         <InputSearch
@@ -137,16 +140,15 @@ export const MyProfile = () => {
         />
         <p className="email__error">{errors["email"]}</p>
       </div>
-
       <Button
         disabled={isLoading || Object.keys(errors).length > 0}
         onClick={handleSubmit}
       >
-        Submit
+        Save
       </Button>
 
       <Button disabled={isEmailLoading} onClick={handleEmailForce}>
-        Force email
+        Send test email
       </Button>
     </div>
   );

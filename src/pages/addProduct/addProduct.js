@@ -125,38 +125,40 @@ export const ExistingProduct = () => {
     <>
       <h3 className="title">Add product</h3>
 
-      <Input
-        className={errors["name"] ? " error" : ""}
-        value={name}
-        onChange={setName}
-        placeholder="Type product name..."
-      />
+      <div className="add-product__wrapper">
+        <Input
+          className={errors["name"] ? " error" : ""}
+          value={name}
+          onChange={setName}
+          placeholder="Type product name..."
+        />
 
-      <DropdownButton
-        placeholder="Select Category"
-        value={selectedCategory}
-        onChange={setSelectedCategory}
-        data={categories.map((c) => ({
-          value: c.name,
-          label: c.name,
-        }))}
-      />
+        <DropdownButton
+          placeholder="Select Category"
+          value={selectedCategory}
+          onChange={setSelectedCategory}
+          data={categories.map((c) => ({
+            value: c.name,
+            label: c.name,
+          }))}
+        />
 
-      <DropdownButton
-        placeholder="Select Subcategory"
-        value={selectedSubCategory}
-        onChange={setSelectedSubCategory}
-        data={subCategories.map((c) => ({
-          value: c.name,
-          label: c.name,
-        }))}
-      />
+        <DropdownButton
+          placeholder="Select Subcategory"
+          value={selectedSubCategory}
+          onChange={setSelectedSubCategory}
+          data={subCategories.map((c) => ({
+            value: c.name,
+            label: c.name,
+          }))}
+        />
 
-      <Input value={expiryDate} onChange={setExpiryDate} type="date" />
+        <Input value={expiryDate} onChange={setExpiryDate} type="date" />
 
-      <TextArea value={note} onChange={setNote} placeholder="Type notes..." />
+        <TextArea value={note} onChange={setNote} placeholder="Type notes..." />
 
-      <Button onClick={handleSubmit}>Add</Button>
+        <Button onClick={handleSubmit}>Add</Button>
+      </div>
     </>
   );
 };

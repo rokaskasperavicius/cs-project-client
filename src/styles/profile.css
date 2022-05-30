@@ -1,9 +1,10 @@
-.profile .name__error, .profile .email__error {
-  color: red;
-  margin-top: -8px;
+.profile {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 500px;
+  width: 100%;
 }
-
-.profile button {
-  margin-top: 15px;
-  margin-left: 10px;
+.profile .email__error {
+  color: red;
 }
