@@ -25,6 +25,11 @@ export const MyProfile = () => {
         if (res.success) {
           reset(res.data);
         }
+      })
+      .catch(() => {
+        toast(
+          "Unexpected server error occured. Please refresh the page or check your network."
+        );
       });
   }, []);
 
@@ -46,6 +51,11 @@ export const MyProfile = () => {
             toastId: "myprofile-error",
           });
         }
+      })
+      .catch(() => {
+        toast(
+          "Unexpected server error occured. Please refresh the page or check your network."
+        );
       });
   };
 
@@ -66,6 +76,11 @@ export const MyProfile = () => {
             toastId: "myprofile-email-error",
           });
         }
+      })
+      .catch(() => {
+        toast(
+          "Unexpected server error occured. Please refresh the page or check your network."
+        );
       })
       .finally(() => setIsEmailLoading(false));
   };

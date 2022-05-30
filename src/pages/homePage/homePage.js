@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import orderBy from "lodash/orderBy";
+import { toast } from "react-toastify";
 
 // Config
 import { apiUrl } from "../../config";
@@ -16,6 +17,11 @@ export const HomePage = () => {
           // Set new categories
           setProducts(orderBy(res.data, ["expiryDate"]));
         }
+      })
+      .catch(() => {
+        toast(
+          "Unexpected server error occured. Please refresh the page or check your network."
+        );
       });
   }, []);
 

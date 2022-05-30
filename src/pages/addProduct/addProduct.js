@@ -34,6 +34,11 @@ export const ExistingProduct = () => {
           // Set new categories
           setCategories(res.data);
         }
+      })
+      .catch(() => {
+        toast(
+          "Unexpected server error occured. Please refresh the page or check your network."
+        );
       });
 
     /**
@@ -55,6 +60,11 @@ export const ExistingProduct = () => {
           // Set new subcategories
           setSubCategories(res.data);
         }
+      })
+      .catch(() => {
+        toast(
+          "Unexpected server error occured. Please refresh the page or check your network."
+        );
       });
 
     /**
@@ -97,6 +107,11 @@ export const ExistingProduct = () => {
             toast("Something went wrong", { toastId: "addproduct-add-fail" });
           }
         }
+      })
+      .catch(() => {
+        toast(
+          "Unexpected server error occured. Please refresh the page or check your network."
+        );
       });
   };
 

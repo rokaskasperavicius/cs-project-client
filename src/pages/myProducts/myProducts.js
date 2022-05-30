@@ -40,6 +40,11 @@ export const MyProducts = () => {
           // Set new categories
           setCategories(res.data);
         }
+      })
+      .catch(() => {
+        toast(
+          "Unexpected server error occured. Please refresh the page or check your network."
+        );
       });
   }, []);
 
@@ -57,6 +62,11 @@ export const MyProducts = () => {
         if (res.success) {
           setSubCategories(res.data);
         }
+      })
+      .catch(() => {
+        toast(
+          "Unexpected server error occured. Please refresh the page or check your network."
+        );
       });
   }, [selectedCategory]);
 
@@ -81,6 +91,11 @@ export const MyProducts = () => {
           // Order the new product list
           setProducts(orderBy(res.data, [selectedOrderBy]));
         }
+      })
+      .catch(() => {
+        toast(
+          "Unexpected server error occured. Please refresh the page or check your network."
+        );
       });
   };
 
@@ -106,6 +121,11 @@ export const MyProducts = () => {
         } else {
           toast("Something went wrong");
         }
+      })
+      .catch(() => {
+        toast(
+          "Unexpected server error occured. Please refresh the page or check your network."
+        );
       });
   };
 
