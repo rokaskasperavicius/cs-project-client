@@ -210,8 +210,10 @@ export const MyList = () => {
             </p>
             <p>
               <strong>Expiry date: </strong> {p.expiryDate.split("T")[0]}
+              <a onClick={() => handleDelete(p)}>
+              <img src={TrashIcon} width={20} alt='Trash icon' /> </a>
             </p>
-            <Button onClick={() => handleDelete(p)}>Delete</Button>
+
           </div>
         ))}
       </div>
