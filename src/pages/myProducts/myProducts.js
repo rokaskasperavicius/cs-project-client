@@ -115,7 +115,7 @@ export const MyProducts = () => {
       <div className="filter__wrapper">
         <Input
           value={selectedSearch}
-          onChange={setSelectedSearch}
+          onChange={(e) => setSelectedSearch(e.target.value)}
           placeholder="Search for product..."
         />
 
@@ -124,14 +124,14 @@ export const MyProducts = () => {
           placeholder="Select category..."
           aria-label="ff"
           value={selectedCategory}
-          onChange={setSelectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
           options={categories}
         />
         {selectedCategory && (
           <DropdownButton
             placeholder="Select subcategory..."
             value={selectedSubcategory}
-            onChange={setSelectedSubcategory}
+            onChange={(e) => setSelectedSubcategory(e.target.value)}
             options={subCategories}
           />
         )}
