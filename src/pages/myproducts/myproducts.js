@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import orderBy from "lodash/orderBy";
-import TrashIcon from "../../assets/icons/trash.svg"
-import * as HoverCard from '@radix-ui/react-hover-card';
+import TrashIcon from "../../assets/icons/trash.svg";
 
 import DropdownButton from "../../components/DropdownButton";
 import SortButton from "../../components/SortButton";
@@ -10,7 +9,7 @@ import { InputSearch } from "../../components/inputSearch";
 import { apiUrl } from "../../config";
 import { Button } from "../../components";
 import mylist from "../../assets/icons/mylist.svg";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 export const MyList = () => {
   const [products, setProducts] = useState([]);
@@ -20,7 +19,6 @@ export const MyList = () => {
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const [selectedSearch, setSelectedSearch] = useState("");
   const [selectedOrderBy, setSelectedOrderBy] = useState("name");
-
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -74,7 +72,7 @@ export const MyList = () => {
     }
 
     const endpoint = "/products?" + parametersArray.join("&");
-    setIsLoading(true)
+    setIsLoading(true);
     fetch(apiUrl + endpoint)
       .then((res) => res.json())
       .then((res) => {
@@ -82,7 +80,8 @@ export const MyList = () => {
           // Order the new product list
           setProducts(orderBy(res.data, [selectedOrderBy]));
         }
-      }).finally(() => setIsLoading(false))
+      })
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
@@ -109,7 +108,7 @@ export const MyList = () => {
         // When the product id deleted, fetch the updated products list
         if (res.success) {
           fetchProducts();
-          toast("Product is deleted", {toastId: "myproducts-delete-success"});
+          toast("Product is deleted", { toastId: "myproducts-delete-success" });
         }
       });
   };
@@ -163,41 +162,30 @@ export const MyList = () => {
           }))}
         />
       </div>
-      {false && (
-          <div>LOADING...</div>
-      )}
+      {false && <div>LOADING...</div>}
       {true && (
-          <table className="desktop-view">
-            <thead>
+        <table className="desktop-view">
+          <thead>
             <tr>
               <th>Name</th>
               <th>Note</th>
               <th>Expiry Date</th>
               <th></th>
             </tr>
-            </thead>
-            <tbody>
+          </thead>
+          <tbody>
             {products.map((p) => (
-                <tr>
-                  <th>{p.name}</th>
-                  <th>
-                    <HoverCard.Root>
-                      <HoverCard.Trigger>
-                        {p.note}
-                      </HoverCard.Trigger>
-                      <HoverCard.Content>
-                        {p.note}
-                      </HoverCard.Content>
-                    </HoverCard.Root>
-                  </th>
-                  <th>{p.expiryDate.split("T")[0]}</th>
-                  <th onClick={() => handleDelete(p)}>
-                    <img src={TrashIcon} width={30} alt='Trash icon' />
-                  </th>
-                </tr>
+              <tr>
+                <th>{p.name}</th>
+                <th>{p.note}</th>
+                <th>{p.expiryDate.split("T")[0]}</th>
+                <th onClick={() => handleDelete(p)}>
+                  <img src={TrashIcon} width={30} alt="Trash icon" />
+                </th>
+              </tr>
             ))}
-            </tbody>
-          </table>
+          </tbody>
+        </table>
       )}
 
       <div className="mobile-view">
