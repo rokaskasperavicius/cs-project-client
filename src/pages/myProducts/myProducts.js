@@ -183,10 +183,14 @@ export const MyProducts = () => {
               <strong>Note: </strong> {p.note}
             </p>
             <p>
-              <strong>Expiry date: </strong> {p.expiryDate.split("T")[0]}
-              <a onClick={() => handleDelete(p)}>
-                <img src={TrashIcon} width={20} alt="Trash icon" />{" "}
-              </a>
+              <strong>Expiry date: </strong>
+              {p.expiryDate.split("T")[0]}
+              <img
+                src={TrashIcon}
+                onClick={() => handleDelete(p)}
+                width={20}
+                alt="Trash icon"
+              />
             </p>
           </div>
         ))}

@@ -61,8 +61,14 @@
   padding-left: 6px;
 }
 
-.mobile-view__product > p > a {
+.mobile-view__product > p > img {
   float: right;
+}
+
+.mobile-view__product > p {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .mobile-view__search {
