@@ -1,21 +1,16 @@
 import React from "react";
-import homeicon from "../assets/icons/home.svg";
 
-const DropdownButton = ({ value, onChange, data, placeholder }) => {
-  return (
-  <select
-      className="dropdown"
-      onChange={(e) => onChange(e.target.value)}
-      value={value}
-    >
+const DropdownButton = React.forwardRef(
+  ({ options, placeholder, ...props }, ref) => (
+    <select {...props} ref={ref} className="dropdown">
       <option value="">{placeholder}</option>
-      {data.map((item, key) => (
-        <option key={key} value={item.value}>
-          {item.label}
+      {options.map((item, key) => (
+        <option key={key} value={item.name}>
+          {item.name}
         </option>
       ))}
     </select>
-  );
-};
+  )
+);
 
 export default DropdownButton;

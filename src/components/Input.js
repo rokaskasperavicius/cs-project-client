@@ -1,15 +1,13 @@
-export const Input = ({
-  type = "text",
-  value,
-  onChange,
-  placeholder,
-  className = "",
-}) => (
-  <input
-    value={value}
-    onChange={(e) => onChange(e.target.value)}
-    type={type}
-    className={"input" + className}
-    placeholder={placeholder}
-  />
+import React from "react";
+
+export const Input = React.forwardRef(
+  ({ type = "text", placeholder, className = "", ...props }, ref) => (
+    <input
+      ref={ref}
+      {...props}
+      type={type}
+      className={"input" + className}
+      placeholder={placeholder}
+    />
+  )
 );

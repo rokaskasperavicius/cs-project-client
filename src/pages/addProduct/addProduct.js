@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+
 import { Button } from "../../components/Button";
 import DropdownButton from "../../components/DropdownButton";
 import { Input } from "../../components/Input";
@@ -7,81 +9,18 @@ import { apiUrl } from "../../config";
 import { toast } from "react-toastify";
 
 export const ExistingProduct = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+  const category = watch("category");
+
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [expiryDate, setExpiryDate] = useState("");
-  const [note, setNote] = useState("");
-  const [name, setName] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedSubCategory, setSelectedSubCategory] = useState("");
-
-  const [errors, setErrors] = useState(false);
-
-  const updateName = (name) => {
-    if (!name) {
-      setErrors({
-        ...errors,
-        name: "Field is required",
-      });
-    } else if (name.length > 95) {
-      setErrors({
-        ...errors,
-        name: "Field is too long",
-      });
-    } else {
-      delete errors["name"];
-      setErrors(errors);
-    }
-
-    setName(name);
-  };
-  const updateCategories = (selectedCategory) => {
-    if (!selectedCategory) {
-      setErrors({
-        ...errors,
-        selectedCategory: "Category required",
-      });
-    } else {
-      delete errors["selectedCategory"];
-      setErrors(errors);
-    }
-
-    setSelectedCategory(selectedCategory);
-  };
-  const updateSubcategories = (selectedSubCategory) => {
-    if (!selectedSubCategory) {
-      setErrors({
-        ...errors,
-        selectedSubCategory: "Subcategory required",
-      });
-    } else {
-      delete errors["selectedSubCategory"];
-      setErrors(errors);
-    }
-
-    setSelectedSubCategory(selectedSubCategory);
-  };
-  const updateCalendar = (expiryDate) => {
-    if (!expiryDate) {
-      setErrors({
-        ...errors,
-        expiryDate: "Date required",
-      });
-    } else if (new Date(expiryDate) < new Date()) {
-      setErrors({
-        ...errors,
-        expiryDate: "Date must in the future",
-      });
-    } else {
-      delete errors["expiryDate"];
-      setErrors(errors);
-    }
-
-    setExpiryDate(expiryDate);
-  };
 
   useEffect(() => {
     // Fetching all categories
@@ -102,17 +41,14 @@ export const ExistingProduct = () => {
 
   useEffect(() => {
     // Fail quick
-    if (!selectedCategory) {
+    if (!category) {
       return;
     }
     // Fetch all category's subcategories
-    fetch(apiUrl + "/categories/subcategories?categoryName=" + selectedCategory)
+    fetch(apiUrl + "/categories/subcategories?categoryName=" + category)
       .then((res) => res.json())
       .then((res) => {
         if (res.success) {
-          // Reset selected subcategory
-          setSelectedSubCategory("");
-
           // Set new subcategories
           setSubCategories(res.data);
         }
@@ -122,15 +58,14 @@ export const ExistingProduct = () => {
      * The second parameter (selectedCategory) ensures that the useEffect calls
      * the function only when selectedCategory changes
      */
-  }, [selectedCategory]);
+  }, [category]);
 
   // Controller
-  const handleSubmit = () => {
-    setIsLoading(true);
+  const onSubmit = async ({ name, subCategory, expiryDate, note }) => {
     // Generate the body necessary for BE
     const body = {
       name,
-      subCategoryName: selectedSubCategory,
+      subCategoryName: subCategory,
       note: note || undefined,
       expiryDate: new Date(expiryDate).toISOString(),
     };
@@ -147,79 +82,88 @@ export const ExistingProduct = () => {
       .then((res) => {
         // If BE inserted the product, reset the form
         if (res.success) {
-          setName("");
-          setNote("");
-          setSelectedSubCategory("");
-          setExpiryDate("");
+          reset();
 
-          toast("Product is added", { toastId: "addproduct-add-success" });
+          toast("Product was added", { toastId: "addproduct-add-success" });
         }
 
-        if (!res?.success && res?.errorCode === 2) {
-          toast("Product already exists", { toastId: "addproduct-add-fail" });
-        } else {
-          toast("Something went wrong", { toastId: "addproduct-add-fail" });
+        if (!res?.success) {
+          if (res?.errorCode === 2) {
+            toast("Product already exists", { toastId: "addproduct-add-fail" });
+          } else {
+            toast("Something went wrong", { toastId: "addproduct-add-fail" });
+          }
         }
-      })
-      .finally(() => setIsLoading(false));
+      });
   };
 
   return (
     <>
       <h3 className="title">Add product</h3>
 
-      <div>
-        <Input
-          value={name}
-          onChange={updateName}
-          placeholder="Type product name..."
-        />
-        <p className="name__error">{errors["name"]}</p>
-      </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <Input
+            {...register("name", {
+              required: "Name is required",
+              maxLength: { value: 90, message: "Name is too long" },
+            })}
+            placeholder="Type product name..."
+          />
+          <p className="error-field">{errors["name"]?.message}</p>
+        </div>
 
-      <div>
-        <DropdownButton
-          placeholder="Select Category"
-          value={selectedCategory}
-          onChange={updateCategories}
-          data={categories.map((c) => ({
-            value: c.name,
-            label: c.name,
-          }))}
-        />
-        <p className="categories__error">{errors["selectedCategory"]}</p>
-      </div>
-
-      {selectedCategory && (
         <div>
           <DropdownButton
-            placeholder="Select Subcategory"
-            value={selectedSubCategory}
-            onChange={updateSubcategories}
-            data={subCategories.map((c) => ({
-              value: c.name,
-              label: c.name,
-            }))}
+            {...register("category", {
+              required: "Category is required",
+            })}
+            placeholder="Select category"
+            options={categories}
           />
-          <p className="subcategories__error">
-            {errors["selectedSubCategory"]}
-          </p>
+          <p className="error-field">{errors["category"]?.message}</p>
         </div>
-      )}
 
-      <div>
-        <Input value={expiryDate} onChange={updateCalendar} type="date" />
-        <p className="calendar__error">{errors["expiryDate"]}</p>
-      </div>
+        {category && (
+          <div>
+            <DropdownButton
+              {...register("subCategory", {
+                required: "Category is required",
+              })}
+              placeholder="Select subcategory"
+              options={subCategories}
+            />
+            <p className="error-field">{errors["subCategory"]?.message}</p>
+          </div>
+        )}
 
-      <TextArea value={note} onChange={setNote} placeholder="Type notes..." />
+        <div>
+          <Input
+            type="date"
+            {...register("expiryDate", {
+              required: "Expiry date is required",
+              validate: (date) =>
+                new Date(date) > new Date() ||
+                "Expiry date must be in the future",
+            })}
+          />
+          <p className="error-field">{errors["expiryDate"]?.message}</p>
+        </div>
 
-      <Button
-        disabled={isLoading || Object.keys(errors).length > 0}
-        onClick={handleSubmit}
-      >
-        Add
-      </Button>
+        <div>
+          <TextArea
+            {...register("note", {
+              maxLength: { value: 900, message: "Note is too long" },
+            })}
+            placeholder="Type notes..."
+          />
+          <p className="error-field">{errors["note"]?.message}</p>
+        </div>
+
+        <Button disabled={isSubmitting} onClick={handleSubmit}>
+          Add
+        </Button>
+      </form>
     </>
   );
 };

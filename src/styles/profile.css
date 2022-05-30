@@ -1,4 +1,10 @@
-.profile .name__error, .profile .email__error {
+.profile .name__error,
+.profile .email__error {
+  color: red;
+  margin-top: -8px;
+}
+
+.error-field {
   color: red;
   margin-top: -8px;
 }

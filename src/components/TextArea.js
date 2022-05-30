@@ -1,8 +1,10 @@
-export const TextArea = ({ value, onChange, placeholder, className }) => (
+import React from "react";
+
+export const TextArea = React.forwardRef(({ placeholder, ...props }, ref) => (
   <textarea
-    value={value}
-    onChange={(e) => onChange(e.target.value)}
+    {...props}
+    ref={ref}
     placeholder={placeholder}
     className="textarea"
   />
-);
+));
