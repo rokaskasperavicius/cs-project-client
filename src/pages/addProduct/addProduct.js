@@ -101,7 +101,7 @@ export const ExistingProduct = () => {
     <>
       <h3 className="title">Add product</h3>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="add-product__wrapper">
         <div>
           <Input
             {...register("name", {
@@ -164,6 +164,45 @@ export const ExistingProduct = () => {
           Add
         </Button>
       </form>
+      {/* <div className="add-product__wrapper">
+        <Input
+          className={errors["name"] ? " error" : ""}
+          value={name}
+          onChange={setName}
+          placeholder="Type product name..."
+        />
+
+        <DropdownButton
+          placeholder="Select Category"
+          value={selectedCategory}
+          onChange={setSelectedCategory}
+          data={categories.map((c) => ({
+            value: c.name,
+            label: c.name,
+          }))}
+        />
+
+        <DropdownButton
+          placeholder="Select Subcategory"
+          value={selectedSubCategory}
+          onChange={setSelectedSubCategory}
+          data={subCategories.map((c) => ({
+            value: c.name,
+            label: c.name,
+          }))}
+        />
+
+        <Input
+          value={expiryDate}
+          onChange={setExpiryDate}
+          type="date"
+          placeholder="yasudasd"
+        />
+
+        <TextArea value={note} onChange={setNote} placeholder="Type notes..." />
+
+        <Button onClick={handleSubmit}>Add</Button>
+      </div> */}
     </>
   );
 };

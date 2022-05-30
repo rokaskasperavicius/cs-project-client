@@ -1,19 +1,29 @@
 .layout {
-  /* height: 100vh; */
+  min-height: 100vh;
   background-image: url("../assets/pictures/earth.svg");
   background-repeat: no-repeat;
   background-size: contain;
   background-attachment: fixed;
   background-position: center;
   display: flex;
-
   flex-direction: column;
 }
 
 .page-content {
-  /* margin-top: 60px; */
+  margin-top: 60px;
   margin-bottom: 60px;
   flex-grow: 1;
   padding: 0px 30px 30px 30px;
-  /* overflow-y: scroll; */
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.add-product__wrapper {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }

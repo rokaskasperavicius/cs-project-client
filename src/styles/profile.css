@@ -1,15 +1,17 @@
-.profile .name__error,
+/* .profile .name__error,
 .profile .email__error {
   color: red;
   margin-top: -8px;
 }
 
-.error-field {
+.error-field { */
+.profile {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 500px;
+  width: 100%;
+}
+/* .profile .email__error {
   color: red;
-  margin-top: -8px;
-}
-
-.profile button {
-  margin-top: 15px;
-  margin-left: 10px;
-}
+} */

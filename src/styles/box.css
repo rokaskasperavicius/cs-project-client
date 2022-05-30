@@ -1,32 +1,28 @@
 .box {
-    display: flex;
-    flex-direction: column;
-    justify-content: normal;
-    margin: auto;
-    height: 450px;
-    width: 300px;
-    background-color: rgb(255, 255, 255, .8);
-    border-radius: 35px;
-    border: 1px solid black;
-    box-shadow: 4px 4px 1px 1px rgba(0, 0, 0, 0.2);
-    color: black;
-    text-align: center;
-    padding-block: 10px;
-    overflow: scroll;
+  width: 300px;
+  background-color: rgb(255, 255, 255, 0.8);
+  border-radius: 35px;
+  border: 1px solid black;
+  box-shadow: 4px 4px 1px 1px rgba(0, 0, 0, 0.2);
+  color: black;
+  text-align: center;
+  padding: 15px 15px 20px 15px;
 }
 
-.box > h3 {
-    padding: 10px;
+.box__wrapper {
+  margin-top: 20px;
+  height: 300px;
+  overflow-y: scroll;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 7px;
+  padding-right: 10px;
 }
 
-.box > div {
-    display: flex;
-    flex-direction: row;
-    column-gap: 30px;
-    align-content: space-between;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    padding-inline: 20px;
-    padding-block: 7px;
-    font-size: 13px;
+.box__wrapper > div {
+  display: flex;
+  align-content: space-between;
+  justify-content: space-between;
 }

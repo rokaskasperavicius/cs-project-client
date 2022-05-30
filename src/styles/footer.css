@@ -4,8 +4,8 @@
   background-color: #9999f5;
   color: white;
   box-shadow: 0 -5px 6px rgba(0, 0, 0, 0.2);
-  /* position: fixed; */
-  top: calc(100vh - 60px);
+  position: fixed;
+  bottom: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,8 +22,8 @@
   margin-right: auto;
   margin-left: auto;
   max-width: 960px;
-  padding-right: 20px; 
-  padding-left:  20px;
+  padding-right: 20px;
+  padding-left: 20px;
 }
 
 a {
@@ -41,7 +41,6 @@ a:hover {
   align-items: center;
 }
 
-
 .footer-product > img {
   margin-left: 5px;
 }
@@ -51,4 +50,3 @@ a:hover {
     display: none;
   }
 }
-

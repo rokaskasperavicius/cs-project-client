@@ -34,14 +34,16 @@ export const HomePage = () => {
       <h2 className="title">Welcome</h2>
       <div className="box">
         <h3>Products expiring soon</h3>
-        {products
-          .filter((p) => p.expiryDate < new Date().addDays(5).toISOString())
-          .map((p) => (
-            <div>
-              <span>{p.name}</span>
-              <span>{p.expiryDate.split("T")[0]}</span>
-            </div>
-          ))}
+        <div className="box__wrapper">
+          {products
+            .filter((p) => p.expiryDate < new Date().addDays(5).toISOString())
+            .map((p) => (
+              <div>
+                <span>{p.name}</span>
+                <span>{p.expiryDate.split("T")[0]}</span>
+              </div>
+            ))}
+        </div>
       </div>
     </>
   );

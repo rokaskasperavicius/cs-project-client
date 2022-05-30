@@ -7,8 +7,6 @@ import DropdownButton from "../../components/DropdownButton";
 import SortButton from "../../components/SortButton";
 import { InputSearch } from "../../components/inputSearch";
 import { apiUrl } from "../../config";
-import { Button } from "../../components";
-import mylist from "../../assets/icons/mylist.svg";
 import { toast } from "react-toastify";
 
 export const MyList = () => {
@@ -125,27 +123,20 @@ export const MyList = () => {
 
         <label className="filter__separator">or select category</label>
         <DropdownButton
-          placeholder="Category"
+          placeholder="Select category..."
           aria-label="ff"
           value={selectedCategory}
           onChange={setSelectedCategory}
-          data={categories.map((c) => ({
-            value: c.name,
-            label: c.name,
-          }))}
+          options={categories}
         />
         {selectedCategory && (
           <DropdownButton
-            placeholder="*Subcategory"
+            placeholder="Select subcategory..."
             value={selectedSubcategory}
             onChange={setSelectedSubcategory}
-            data={subCategories.map((c) => ({
-              value: c.name,
-              label: c.name,
-            }))}
+            options={subCategories}
           />
         )}
-
         <SortButton
           placeholder=""
           disableEmptyValue={true}
@@ -162,8 +153,8 @@ export const MyList = () => {
           }))}
         />
       </div>
-      {false && <div>LOADING...</div>}
-      {true && (
+      {isLoading && <div>Loading...</div>}
+      {!isLoading && (
         <table className="desktop-view">
           <thead>
             <tr>
@@ -199,8 +190,10 @@ export const MyList = () => {
             </p>
             <p>
               <strong>Expiry date: </strong> {p.expiryDate.split("T")[0]}
+              <a onClick={() => handleDelete(p)}>
+                <img src={TrashIcon} width={20} alt="Trash icon" />{" "}
+              </a>
             </p>
-            <Button onClick={() => handleDelete(p)}>Delete</Button>
           </div>
         ))}
       </div>
