@@ -18,7 +18,6 @@ export const ExistingProduct = () => {
   const [errors, setErrors] = useState(false);
 
   useEffect(() => {
-    console.log(name.length);
     if (name.length > 90) {
       setErrors({
         ...errors,
@@ -76,7 +75,6 @@ export const ExistingProduct = () => {
 
   // Controller
   const handleSubmit = () => {
-    console.log(expiryDate, name);
     // Fail quick
     if (!(expiryDate && name && selectedSubCategory)) {
       return;
@@ -153,7 +151,12 @@ export const ExistingProduct = () => {
           }))}
         />
 
-        <Input value={expiryDate} onChange={setExpiryDate} type="date" />
+        <Input
+          value={expiryDate}
+          onChange={setExpiryDate}
+          type="date"
+          placeholder="yasudasd"
+        />
 
         <TextArea value={note} onChange={setNote} placeholder="Type notes..." />
 
