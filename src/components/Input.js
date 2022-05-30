@@ -6,7 +6,7 @@ export const Input = React.forwardRef(
       ref={ref}
       {...props}
       type={type}
-      className={"input" + className}
+      className={className}
       placeholder={placeholder}
     />
   )

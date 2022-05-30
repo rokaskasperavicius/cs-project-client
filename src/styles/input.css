@@ -1,4 +1,4 @@
-.input {
+input {
   height: 40px;
   width: 100%;
   background-color: white;
@@ -11,17 +11,17 @@
   padding: 0 20px;
 }
 
-.input[type="date"] {
+input[type="date"] {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
 
-.input::placeholder {
+input::placeholder {
   color: black;
 }
 
 input:focus-visible {
-  outline: 2px solid #9999f5 !important;
-  border: 1px solid white;
+  outline: none;
+  border: 2px solid #9999f5;
 }
