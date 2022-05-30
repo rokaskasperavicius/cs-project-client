@@ -12,3 +12,7 @@
   display: block;
   font-family: "Open Sans", sans-serif;
 }
+
+.textarea::placeholder {
+  color: black;
+}

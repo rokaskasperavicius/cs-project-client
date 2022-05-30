@@ -1,12 +1,11 @@
 .layout {
-  /* height: 100vh; */
+  min-height: 100vh;
   background-image: url("../assets/pictures/earth.svg");
   background-repeat: no-repeat;
   background-size: contain;
   background-attachment: fixed;
   background-position: center;
   display: flex;
-
   flex-direction: column;
 }
 
@@ -16,7 +15,7 @@
   flex-grow: 1;
   padding: 0px 30px 30px 30px;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   flex-direction: column;
 }

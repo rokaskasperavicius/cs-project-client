@@ -1,6 +1,6 @@
 .input {
   height: 40px;
-  midth: 100%;
+  width: 100%;
   background-color: white;
   border-radius: 10px;
   border: 1px solid black;
@@ -16,4 +16,8 @@
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+}
+
+.input::placeholder {
+  color: black;
 }

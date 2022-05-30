@@ -121,7 +121,7 @@ export const MyList = () => {
 
         <label className="filter__separator">or select category</label>
         <DropdownButton
-          placeholder="Category"
+          placeholder="Select category..."
           aria-label="ff"
           value={selectedCategory}
           onChange={setSelectedCategory}
@@ -132,7 +132,7 @@ export const MyList = () => {
         />
         {selectedCategory && (
           <DropdownButton
-            placeholder="*Subcategory"
+            placeholder="Select subcategory..."
             value={selectedSubcategory}
             onChange={setSelectedSubcategory}
             data={subCategories.map((c) => ({
