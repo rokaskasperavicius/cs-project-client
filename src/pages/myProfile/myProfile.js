@@ -71,10 +71,18 @@ export const MyProfile = () => {
           toast("Email sent to " + getValues("email"), {
             toastId: "myprofile-email-success",
           });
-        } else {
-          toast("Something went wrong", {
-            toastId: "myprofile-email-error",
-          });
+        }
+
+        if (!res?.success) {
+          if (res?.errorCode === 3) {
+            toast("Email was not sent - please add new expiring products", {
+              toastId: "myprofile-email-error",
+            });
+          } else {
+            toast("Something went wrong", {
+              toastId: "myprofile-email-error",
+            });
+          }
         }
       })
       .catch(() => {
